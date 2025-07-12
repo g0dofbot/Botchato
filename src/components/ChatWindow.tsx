@@ -9,7 +9,8 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { Send, Smile } from 'lucide-react';
+import { SendIcon } from '@/components/icons/SendIcon';
+import { SmileIcon } from '@/components/icons/SmileIcon';
 
 interface ChatWindowProps {
   contact: Contact | null;
@@ -80,7 +81,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
           <Popover>
             <PopoverTrigger asChild>
               <Button type="button" variant="ghost" size="icon">
-                <Smile />
+                <SmileIcon />
                 <span className="sr-only">Open emoji picker</span>
               </Button>
             </PopoverTrigger>
@@ -109,7 +110,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
             className="flex-grow"
           />
           <Button type="submit" size="icon" variant="secondary">
-            <Send />
+            <SendIcon />
             <span className="sr-only">Send</span>
           </Button>
         </form>

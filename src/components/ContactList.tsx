@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { User, UserPlus, Settings, UserCircle, Users } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import {
   Tooltip,
@@ -13,6 +12,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { UserIcon } from '@/components/icons/UserIcon';
+import { UserPlusIcon } from '@/components/icons/UserPlusIcon';
+import { SettingsIcon } from '@/components/icons/SettingsIcon';
+import { UsersIcon } from '@/components/icons/UsersIcon';
 
 
 interface ContactListProps {
@@ -27,7 +30,7 @@ export function ContactList({ contacts, selectedContact, onSelectContact }: Cont
       <CardHeader className="flex-shrink-0">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Users />
+            <UsersIcon />
             Contacts
           </div>
           <TooltipProvider>
@@ -35,7 +38,7 @@ export function ContactList({ contacts, selectedContact, onSelectContact }: Cont
                <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon">
-                    <UserPlus />
+                    <UserPlusIcon />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -45,7 +48,7 @@ export function ContactList({ contacts, selectedContact, onSelectContact }: Cont
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon">
-                    <UserCircle />
+                    <UserIcon />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -55,7 +58,7 @@ export function ContactList({ contacts, selectedContact, onSelectContact }: Cont
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon">
-                    <Settings />
+                    <SettingsIcon />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -81,7 +84,7 @@ export function ContactList({ contacts, selectedContact, onSelectContact }: Cont
                     : 'hover:bg-muted'
                 )}
               >
-                <User />
+                <UserIcon />
                 <span>{contact.name}</span>
               </li>
             ))}

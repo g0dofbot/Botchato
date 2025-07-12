@@ -7,7 +7,7 @@ import { type Contact, type Message, contacts as mockContacts } from '@/lib/mock
 import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { RadioTower } from 'lucide-react';
+import { RadioTowerIcon } from '@/components/icons/RadioTowerIcon';
 
 export default function Home() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -94,7 +94,7 @@ export default function Home() {
       <Card className="border-2 border-primary/50 shadow-[0_0_15px_rgba(var(--primary-hsl),0.4)] bg-card/80 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-headline text-3xl">
-            <RadioTower /> Sepia Messenger
+            <RadioTowerIcon className="w-8 h-8" /> Sepia Messenger
           </CardTitle>
         </CardHeader>
         <CardContent>
