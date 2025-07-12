@@ -7,13 +7,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { Send } from 'lucide-react';
+import { Send, Smile } from 'lucide-react';
 
 interface ChatWindowProps {
   contact: Contact | null;
   onSendMessage: (message: string) => void;
 }
+
+const emojis = ['😀', '😂', '👍', '❤️', '🎉', '🔥', '🚀', '⭐', '❤️‍🩹', '💯', '👋', '💀'];
 
 export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
@@ -36,6 +39,10 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
       playMessageSentSound();
     }
   };
+  
+  const handleEmojiSelect = (emoji: string) => {
+    setNewMessage(prev => prev + emoji);
+  }
 
   if (!contact) {
     return (
@@ -63,13 +70,35 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                         ? 'bg-secondary text-secondary-foreground' 
                         : 'bg-muted text-muted-foreground'
                     )}>
-                        <p>{msg.text}</p>
+                        <p className="break-words">{msg.text}</p>
                     </div>
                 </div>
             ))}
             </div>
         </ScrollArea>
         <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button type="button" variant="ghost" size="icon">
+                <Smile />
+                <span className="sr-only">Open emoji picker</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div className="grid grid-cols-6 gap-2 text-2xl">
+                {emojis.map(emoji => (
+                  <button
+                    key={emoji}
+                    type="button"
+                    onClick={() => handleEmojiSelect(emoji)}
+                    className="rounded-md hover:bg-muted transition-colors"
+                  >
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
           <Input
             type="text"
             id="message_field"
