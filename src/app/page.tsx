@@ -76,7 +76,7 @@ export default function Home() {
       >
         <Card className="max-w-md bg-card/80 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle>Initialize Comms System?</CardTitle>
+            <CardTitle className="font-headline">Initialize Comms System?</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground mb-4">[Click to enable audio feedback]</p>

@@ -50,7 +50,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   return (
     <Card className="h-[80vh] flex flex-col">
       <CardHeader>
-        <CardTitle>{contact.name}</CardTitle>
+        <CardTitle className="font-headline">{contact.name}</CardTitle>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-4 overflow-hidden">
         <ScrollArea className="flex-grow  p-4 rounded-md bg-background" ref={scrollAreaRef}>
@@ -63,7 +63,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                         ? 'bg-secondary text-secondary-foreground' 
                         : 'bg-muted text-muted-foreground'
                     )}>
-                        <p className="text-sm">{msg.text}</p>
+                        <p>{msg.text}</p>
                     </div>
                 </div>
             ))}
