@@ -2,8 +2,18 @@
 
 import type { Contact } from '@/lib/mock-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { User } from 'lucide-react';
+import { User, UserPlus, Settings, UserCircle, Users } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 
 interface ContactListProps {
   contacts: Contact[];
@@ -13,28 +23,70 @@ interface ContactListProps {
 
 export function ContactList({ contacts, selectedContact, onSelectContact }: ContactListProps) {
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle>Contacts</CardTitle>
+    <Card className="h-full flex flex-col">
+      <CardHeader className="flex-shrink-0">
+        <CardTitle className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Users />
+            Contacts
+          </div>
+          <TooltipProvider>
+            <div className="flex items-center gap-1">
+               <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <UserPlus />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Add Friend</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <UserCircle />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Profile</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <Settings />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Settings</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </TooltipProvider>
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <ul className="space-y-2">
-          {contacts.map((contact) => (
-            <li
-              key={contact.id}
-              onClick={() => onSelectContact(contact)}
-              className={cn(
-                "p-3 rounded-md cursor-pointer transition-colors flex items-center gap-4",
-                selectedContact?.id === contact.id
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted'
-              )}
-            >
-              <User />
-              <span>{contact.name}</span>
-            </li>
-          ))}
-        </ul>
+      <Separator />
+      <CardContent className="p-0 flex-grow">
+        <ScrollArea className="h-[calc(80vh-120px)]">
+          <ul className="p-2 space-y-1">
+            {contacts.map((contact) => (
+              <li
+                key={contact.id}
+                onClick={() => onSelectContact(contact)}
+                className={cn(
+                  "p-3 rounded-md cursor-pointer transition-colors flex items-center gap-4",
+                  selectedContact?.id === contact.id
+                    ? 'bg-primary text-primary-foreground'
+                    : 'hover:bg-muted'
+                )}
+              >
+                <User />
+                <span>{contact.name}</span>
+              </li>
+            ))}
+          </ul>
+        </ScrollArea>
       </CardContent>
     </Card>
   );

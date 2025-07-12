@@ -17,11 +17,14 @@ interface ChatWindowProps {
 
 export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
-  const scrollAreaViewportRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (scrollAreaViewportRef.current) {
-      scrollAreaViewportRef.current.scrollTop = scrollAreaViewportRef.current.scrollHeight;
+    if (scrollAreaRef.current) {
+        const scrollArea = scrollAreaRef.current.querySelector('div');
+        if (scrollArea) {
+            scrollArea.scrollTop = scrollArea.scrollHeight;
+        }
     }
   }, [contact?.messages]);
 
@@ -50,7 +53,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
         <CardTitle>{contact.name}</CardTitle>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-4 overflow-hidden">
-        <ScrollArea className="flex-grow  p-4 rounded-md bg-background" viewportRef={scrollAreaViewportRef}>
+        <ScrollArea className="flex-grow  p-4 rounded-md bg-background" ref={scrollAreaRef}>
             <div className="space-y-4">
             {contact.messages.map((msg) => (
                 <div key={msg.id} className={cn("flex", msg.sender === 'me' ? 'justify-end' : 'justify-start')}>

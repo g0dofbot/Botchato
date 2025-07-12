@@ -10,13 +10,13 @@ const getSynth = (): Tone.Synth | null => {
   if (!synth) {
     synth = new Tone.Synth({
       oscillator: {
-        type: 'triangle' // Changed from square for a slightly softer retro sound
+        type: 'sine' // Softer sound for sepia theme
       },
       envelope: {
-        attack: 0.01,
-        decay: 0.2,
-        sustain: 0.2,
-        release: 0.2
+        attack: 0.02,
+        decay: 0.4,
+        sustain: 0.1,
+        release: 0.3
       }
     }).toDestination();
   }
@@ -39,13 +39,13 @@ export const initAudio = async (): Promise<void> => {
 export const playMessageSentSound = (): void => {
   const s = getSynth();
   if (!s || !isInitialized) return;
-  s.triggerAttackRelease('C3', '8n', Tone.now());
+  s.triggerAttackRelease('A2', '8n', Tone.now());
 };
 
 export const playMessageReceivedSound = (): void => {
   const s = getSynth();
   if (!s || !isInitialized) return;
   const now = Tone.now();
-  s.triggerAttackRelease('G3', '16n', now);
-  s.triggerAttackRelease('C4', '16n', now + 0.1);
+  s.triggerAttackRelease('E3', '16n', now);
+  s.triggerAttackRelease('A3', '16n', now + 0.15);
 };

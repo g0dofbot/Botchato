@@ -7,7 +7,7 @@ import { type Contact, type Message, contacts as mockContacts } from '@/lib/mock
 import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Terminal } from 'lucide-react';
+import { RadioTower } from 'lucide-react';
 
 export default function Home() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -74,9 +74,9 @@ export default function Home() {
         className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4"
         onClick={handleInitAudio}
       >
-        <Card className="max-w-md">
+        <Card className="max-w-md bg-card/80 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle>Initialize Terminal?</CardTitle>
+            <CardTitle>Initialize Comms System?</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground mb-4">[Click to enable audio feedback]</p>
@@ -91,10 +91,10 @@ export default function Home() {
 
   return (
     <main className="p-4 md:p-8 min-h-screen">
-      <Card className="border-2 border-primary/50 shadow-[0_0_15px_rgba(var(--foreground-rgb),0.5)]">
+      <Card className="border-2 border-primary/50 shadow-[0_0_15px_rgba(var(--primary-hsl),0.4)] bg-card/80 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Terminal /> Retro Messenger
+          <CardTitle className="flex items-center gap-2 font-headline text-3xl">
+            <RadioTower /> Sepia Messenger
           </CardTitle>
         </CardHeader>
         <CardContent>
