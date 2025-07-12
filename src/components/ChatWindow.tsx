@@ -3,6 +3,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { Contact } from '@/lib/mock-data';
 import { playMessageSentSound } from '@/lib/sounds';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
+import { Send } from 'lucide-react';
 
 interface ChatWindowProps {
   contact: Contact | null;
@@ -11,11 +17,11 @@ interface ChatWindowProps {
 
 export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const scrollAreaViewportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    if (scrollAreaViewportRef.current) {
+      scrollAreaViewportRef.current.scrollTop = scrollAreaViewportRef.current.scrollHeight;
     }
   }, [contact?.messages]);
 
@@ -30,45 +36,52 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
 
   if (!contact) {
     return (
-      <div className="nes-container is-dark with-title is-centered h-full flex items-center justify-center">
-        <p className="title">Chat</p>
-        <p>Select a contact to start chatting.</p>
-      </div>
+      <Card className="h-full flex items-center justify-center">
+        <CardContent>
+          <p>Select a contact to start chatting.</p>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="nes-container is-dark with-title h-[80vh] flex flex-col">
-      <p className="title">{contact.name}</p>
-      <div
-        ref={chatContainerRef}
-        className="flex-grow p-4 overflow-y-auto bg-[#212529] mb-4 message-list"
-        style={{ imageRendering: 'pixelated' }}
-      >
-        {contact.messages.map((msg) => (
-          <section key={msg.id} className={`message -${msg.sender === 'me' ? 'right' : 'left'}`}>
-            <div className={`nes-balloon from-${msg.sender === 'me' ? 'right' : 'left'} is-dark`}>
-              <p>{msg.text}</p>
+    <Card className="h-[80vh] flex flex-col">
+      <CardHeader>
+        <CardTitle>{contact.name}</CardTitle>
+      </CardHeader>
+      <CardContent className="flex-grow flex flex-col gap-4 overflow-hidden">
+        <ScrollArea className="flex-grow  p-4 rounded-md bg-background" viewportRef={scrollAreaViewportRef}>
+            <div className="space-y-4">
+            {contact.messages.map((msg) => (
+                <div key={msg.id} className={cn("flex", msg.sender === 'me' ? 'justify-end' : 'justify-start')}>
+                    <div className={cn(
+                        "max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-lg",
+                        msg.sender === 'me' 
+                        ? 'bg-secondary text-secondary-foreground' 
+                        : 'bg-muted text-muted-foreground'
+                    )}>
+                        <p className="text-sm">{msg.text}</p>
+                    </div>
+                </div>
+            ))}
             </div>
-          </section>
-        ))}
-      </div>
-      <form onSubmit={handleSendMessage}>
-        <div className="nes-field is-inline">
-          <input
+        </ScrollArea>
+        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+          <Input
             type="text"
             id="message_field"
-            className="nes-input is-dark"
-            placeholder="Type a message..."
+            placeholder="> "
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             autoComplete="off"
+            className="flex-grow"
           />
-          <button type="submit" className="nes-btn is-primary">
-            Send
-          </button>
-        </div>
-      </form>
-    </div>
+          <Button type="submit" size="icon" variant="secondary">
+            <Send />
+            <span className="sr-only">Send</span>
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

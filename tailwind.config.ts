@@ -11,8 +11,8 @@ export default {
     extend: {
       fontFamily: {
         body: ['PT Sans', 'sans-serif'],
-        headline: ['PT Sans', 'sans-serif'],
-        code: ['monospace'],
+        headline: ['VT323', 'monospace'],
+        code: ['VT323','monospace'],
       },
       colors: {
         background: 'hsl(var(--background))',

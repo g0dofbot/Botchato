@@ -1,6 +1,9 @@
 'use client';
 
 import type { Contact } from '@/lib/mock-data';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { User } from 'lucide-react';
 
 interface ContactListProps {
   contacts: Contact[];
@@ -10,30 +13,29 @@ interface ContactListProps {
 
 export function ContactList({ contacts, selectedContact, onSelectContact }: ContactListProps) {
   return (
-    <div className="nes-container is-dark with-title h-full">
-      <p className="title">Contacts</p>
-      <div className="lists">
-        <ul className="nes-list is-circle">
+    <Card className="h-full">
+      <CardHeader>
+        <CardTitle>Contacts</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-2">
           {contacts.map((contact) => (
             <li
               key={contact.id}
               onClick={() => onSelectContact(contact)}
-              className="cursor-pointer"
-              style={{
-                backgroundColor: selectedContact?.id === contact.id ? 'var(--accent-color, #FFFF80)' : 'transparent',
-                color: selectedContact?.id === contact.id ? 'var(--accent-fg-color, #191970)' : 'white',
-                padding: '0.5rem',
-                marginBottom: '0.25rem',
-              }}
+              className={cn(
+                "p-3 rounded-md cursor-pointer transition-colors flex items-center gap-4",
+                selectedContact?.id === contact.id
+                  ? 'bg-primary text-primary-foreground'
+                  : 'hover:bg-muted'
+              )}
             >
-              <div className="flex items-center gap-4">
-                <i className={`nes-avatar is-medium ${contact.avatar}`}></i>
-                <span>{contact.name}</span>
-              </div>
+              <User />
+              <span>{contact.name}</span>
             </li>
           ))}
         </ul>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

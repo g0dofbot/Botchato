@@ -5,6 +5,9 @@ import { ContactList } from '@/components/ContactList';
 import { ChatWindow } from '@/components/ChatWindow';
 import { type Contact, type Message, contacts as mockContacts } from '@/lib/mock-data';
 import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Terminal } from 'lucide-react';
 
 export default function Home() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -68,39 +71,50 @@ export default function Home() {
   if (!audioReady) {
     return (
       <div
-        className="flex items-center justify-center min-h-screen cursor-pointer"
-        style={{ backgroundColor: '#191970', color: 'white' }}
+        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4"
         onClick={handleInitAudio}
       >
-        <div className="nes-container is-dark is-centered">
-          <p>Click to start Retro Messenger</p>
-        </div>
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle>Initialize Terminal?</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground mb-4">[Click to enable audio feedback]</p>
+            <Button>
+              [ Y / N ]
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
     <main className="p-4 md:p-8 min-h-screen">
-      <div className="nes-container is-dark with-title">
-        <h1 className="title">
-          <i className="nes-icon lock is-small"></i> Retro Messenger
-        </h1>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-4">
-            <ContactList
-              contacts={contacts}
-              selectedContact={selectedContact}
-              onSelectContact={setSelectedContact}
-            />
+      <Card className="border-2 border-primary/50 shadow-[0_0_15px_rgba(var(--foreground-rgb),0.5)]">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Terminal /> Retro Messenger
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-4">
+              <ContactList
+                contacts={contacts}
+                selectedContact={selectedContact}
+                onSelectContact={setSelectedContact}
+              />
+            </div>
+            <div className="lg:col-span-8">
+              <ChatWindow
+                contact={selectedContact}
+                onSendMessage={handleSendMessage}
+              />
+            </div>
           </div>
-          <div className="lg:col-span-8">
-            <ChatWindow
-              contact={selectedContact}
-              onSendMessage={handleSendMessage}
-            />
-          </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </main>
   );
 }

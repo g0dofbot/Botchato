@@ -3,63 +3,63 @@
 @tailwind utilities;
 
 body {
-  font-family: 'PT Sans', sans-serif;
+  font-family: 'PT Sans', 'VT323', monospace;
   background-color: hsl(var(--background));
 }
 
 @layer base {
   :root {
-    --background: 240 64% 27%;
-    --foreground: 0 0% 100%;
-    --card: 240 64% 22%;
-    --card-foreground: 0 0% 100%;
-    --popover: 240 64% 22%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 83%;
-    --primary-foreground: 240 64% 10%;
-    --secondary: 240 64% 32%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 240 64% 32%;
-    --muted-foreground: 0 0% 80%;
-    --accent: 60 100% 75%;
-    --accent-foreground: 240 64% 10%;
+    --background: 120 100% 3%;
+    --foreground: 120 100% 70%;
+    --card: 120 100% 5%;
+    --card-foreground: 120 100% 70%;
+    --popover: 120 100% 5%;
+    --popover-foreground: 120 100% 70%;
+    --primary: 120 100% 70%;
+    --primary-foreground: 120 100% 5%;
+    --secondary: 120 100% 10%;
+    --secondary-foreground: 120 100% 80%;
+    --muted: 120 100% 10%;
+    --muted-foreground: 120 100% 60%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 120 100% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 83%;
-    --input: 240 64% 22%;
-    --ring: 60 100% 75%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --border: 120 100% 20%;
+    --input: 120 100% 8%;
+    --ring: 120 100% 50%;
+    --chart-1: 120 70% 50%;
+    --chart-2: 120 60% 45%;
+    --chart-3: 120 80% 55%;
+    --chart-4: 120 65% 60%;
+    --chart-5: 120 75% 55%;
+    --radius: 0.3rem;
   }
   .dark {
-    --background: 240 64% 27%;
-    --foreground: 0 0% 100%;
-    --card: 240 64% 22%;
-    --card-foreground: 0 0% 100%;
-    --popover: 240 64% 22%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 83%;
-    --primary-foreground: 240 64% 10%;
-    --secondary: 240 64% 32%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 240 64% 32%;
-    --muted-foreground: 0 0% 80%;
-    --accent: 60 100% 75%;
-    --accent-foreground: 240 64% 10%;
+    --background: 120 100% 3%;
+    --foreground: 120 100% 70%;
+    --card: 120 100% 5%;
+    --card-foreground: 120 100% 70%;
+    --popover: 120 100% 5%;
+    --popover-foreground: 120 100% 70%;
+    --primary: 120 100% 70%;
+    --primary-foreground: 120 100% 5%;
+    --secondary: 120 100% 10%;
+    --secondary-foreground: 120 100% 80%;
+    --muted: 120 100% 10%;
+    --muted-foreground: 120 100% 60%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 120 100% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 83%;
-    --input: 240 64% 22%;
-    --ring: 60 100% 75%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --border: 120 100% 20%;
+    --input: 120 100% 8%;
+    --ring: 120 100% 50%;
+    --chart-1: 120 70% 50%;
+    --chart-2: 120 60% 45%;
+    --chart-3: 120 80% 55%;
+    --chart-4: 120 65% 60%;
+    --chart-5: 120 75% 55%;
   }
 }
 
@@ -70,21 +70,4 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.message-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.message {
-  margin-bottom: 1rem;
-}
-
-.message.-left {
-  align-self: flex-start;
-}
-
-.message.-right {
-  align-self: flex-end;
 }

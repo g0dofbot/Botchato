@@ -10,13 +10,13 @@ const getSynth = (): Tone.Synth | null => {
   if (!synth) {
     synth = new Tone.Synth({
       oscillator: {
-        type: 'square'
+        type: 'triangle' // Changed from square for a slightly softer retro sound
       },
       envelope: {
-        attack: 0.005,
-        decay: 0.1,
-        sustain: 0.3,
-        release: 0.1
+        attack: 0.01,
+        decay: 0.2,
+        sustain: 0.2,
+        release: 0.2
       }
     }).toDestination();
   }
@@ -26,22 +26,26 @@ const getSynth = (): Tone.Synth | null => {
 export const initAudio = async (): Promise<void> => {
   if (isInitialized || typeof window === 'undefined') return;
   
-  await Tone.start();
-  getSynth();
-  isInitialized = true;
-  console.log('Audio context started');
+  try {
+    await Tone.start();
+    getSynth(); // Initialize synth after user interaction
+    isInitialized = true;
+    console.log('Audio context started');
+  } catch (e) {
+    console.error("Could not start audio context: ", e);
+  }
 };
 
 export const playMessageSentSound = (): void => {
   const s = getSynth();
   if (!s || !isInitialized) return;
-  s.triggerAttackRelease('C4', '16n', Tone.now());
+  s.triggerAttackRelease('C3', '8n', Tone.now());
 };
 
 export const playMessageReceivedSound = (): void => {
   const s = getSynth();
   if (!s || !isInitialized) return;
   const now = Tone.now();
-  s.triggerAttackRelease('E4', '16n', now);
-  s.triggerAttackRelease('G4', '16n', now + 0.1);
+  s.triggerAttackRelease('G3', '16n', now);
+  s.triggerAttackRelease('C4', '16n', now + 0.1);
 };
