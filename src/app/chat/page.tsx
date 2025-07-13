@@ -106,7 +106,7 @@ export default function ChatPage() {
   const themeClass = selectedContact?.status === 'offline' ? 'theme-sepia' : '';
 
   return (
-    <main className={cn("p-2 md:p-4 min-h-screen flex flex-col items-center justify-center", themeClass)}>
+    <main className={cn("p-2 md:p-4 min-h-screen flex flex-col items-center justify-center transition-colors duration-500", themeClass)}>
       <div className="w-full max-w-7xl terminal-container">
         <header className="flex justify-between items-center text-primary p-1">
           <span>BLTMR PLC 2.4.00</span>

@@ -101,6 +101,7 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
   ::selection {
     @apply bg-primary text-primary-foreground;
@@ -111,16 +112,16 @@ body {
   .terminal-container {
     @apply bg-black/50 border-2 border-primary p-1;
     box-shadow: 0 0 15px 2px hsl(var(--primary) / 0.5), inset 0 0 15px 2px hsl(var(--primary) / 0.5);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.5s ease, box-shadow 0.5s ease;
   }
   
   .terminal-panel {
     @apply border border-primary;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.5s ease;
   }
 
   .terminal-header {
     @apply text-primary uppercase px-2 py-1;
-    transition: color 0.3s ease;
+    transition: color 0.5s ease;
   }
 }
