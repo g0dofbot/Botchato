@@ -27,10 +27,17 @@ export default function ChatPage() {
 
   const handleSendMessage = useCallback((messageText: string) => {
     if (!selectedContact) return;
+    
+    // --- REAL E2EE INTEGRATION POINT ---
+    // Here, you would use a library like libsignal-protocol-javascript
+    // to encrypt the messageText using the established secure session
+    // for the selectedContact. The result would be a ciphertext, not
+    // the simple substitution we're using.
+    const encryptedText = encrypt(messageText);
 
     const newMessage: Message = {
       id: Date.now(),
-      text: `YOU: ${encrypt(messageText)}`, // Encrypt the message text
+      text: `YOU: ${encryptedText}`,
       sender: 'me',
       timestamp: new Date().toISOString(),
     };
@@ -44,6 +51,8 @@ export default function ChatPage() {
     
     // Simulate receiving a reply
     setTimeout(() => {
+      // In a real app, this reply would come from a server and would
+      // also need to be decrypted using the secure session.
       const replyMessage: Message = {
         id: Date.now() + 1,
         text: `${selectedContact.name.toUpperCase()}: ${encrypt('ROGER THAT! OVER.')}`, // Encrypt reply
