@@ -12,13 +12,21 @@ import { cn } from '@/lib/utils';
 import { SendIcon } from '@/components/icons/SendIcon';
 import { SmileIcon } from '@/components/icons/SmileIcon';
 import { UserIcon } from '@/components/icons/UserIcon';
+import { EmojiHappyIcon } from '@/components/icons/EmojiHappyIcon';
+import { EmojiSadIcon } from '@/components/icons/EmojiSadIcon';
+import { EmojiWinkIcon } from '@/components/icons/EmojiWinkIcon';
 
 interface ChatWindowProps {
   contact: Contact | null;
   onSendMessage: (message: string) => void;
 }
 
-const emojis = [':)', ':(', ':D', ':O', ';)', ':P', '<3', '^_^', 'o_O', 'T_T', '8)', 'B)'];
+const emojis = [
+  { char: ':)', component: EmojiHappyIcon, name: 'Happy' },
+  { char: ':(', component: EmojiSadIcon, name: 'Sad' },
+  { char: ';)', component: EmojiWinkIcon, name: 'Wink' },
+];
+
 
 export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
@@ -100,12 +108,14 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
               <div className="grid grid-cols-4 gap-2 text-lg font-body">
                 {emojis.map(emoji => (
                   <button
-                    key={emoji}
+                    key={emoji.name}
                     type="button"
-                    onClick={() => handleEmojiSelect(emoji)}
+                    title={emoji.name}
+                    onClick={() => handleEmojiSelect(emoji.char)}
                     className="rounded-md p-2 hover:bg-muted transition-colors"
                   >
-                    {emoji}
+                    <emoji.component className="w-6 h-6" />
+                    <span className="sr-only">{emoji.name}</span>
                   </button>
                 ))}
               </div>
