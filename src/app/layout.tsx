@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
@@ -11,7 +12,7 @@ const vt323 = VT323({
 });
 
 export const metadata: Metadata = {
-  title: 'BPD Secure Messaging',
+  title: 'Botrochat',
   description: 'An encrypted, retro terminal-style messaging app.',
 };
 

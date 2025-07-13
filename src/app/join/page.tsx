@@ -10,15 +10,6 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserPlusIcon } from '@/components/icons/UserPlusIcon';
 
-const asciiArt = `
-██████╗░██╗░░░██╗██████╗░██╗██████╗░███████╗
-██╔══██╗██║░░░██║██╔══██╗██║██╔══██╗██╔════╝
-██████╔╝██║░░░██║██║░░██║██║██████╔╝█████╗░░
-██╔═══╝░██║░░░██║██║░░██║██║██╔══██╗██╔══╝░░
-██║░░░░░╚██████╔╝██████╔╝██║██║░░██║███████╗
-╚═╝░░░░░░╚═════╝░╚═════╝░╚═╝╚═╝░░╚═╝╚══════╝
-`;
-
 export default function JoinPage() {
   const [officerId, setOfficerId] = useState('');
   const [callsign, setCallsign] = useState('');
@@ -40,9 +31,7 @@ export default function JoinPage() {
   return (
     <main className="p-4 min-h-screen flex flex-col items-center justify-center">
        <div className="text-center mb-8">
-          <pre className="text-xs leading-tight text-primary">
-{asciiArt}
-          </pre>
+          <h1 className="text-5xl text-primary font-mono tracking-widest">BOTROCHAT</h1>
         </div>
       <Card className="w-full max-w-md bg-background/50 border-primary/30">
         <CardHeader>

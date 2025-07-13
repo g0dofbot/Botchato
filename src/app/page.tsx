@@ -32,7 +32,7 @@ export default function LoginPage() {
       <Card className="max-w-md w-full bg-transparent border-primary/30 shadow-none">
         <CardHeader className="pt-6 pb-4">
           <CardTitle className="text-primary text-center text-lg tracking-widest">
-            BPD SECURE MESSAGING
+            BOTROCHAT
           </CardTitle>
         </CardHeader>
         <CardContent className="px-6 pb-6">
