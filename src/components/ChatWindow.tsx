@@ -76,15 +76,12 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                 <div
                   className={cn(
                     "relative max-w-xs md:max-w-md lg:max-w-lg",
-                    msg.sender === 'me'
-                      ? 'bg-secondary text-secondary-foreground'
-                      : 'bg-muted text-muted-foreground'
                   )}
                 >
                   <div className="pixel-border">
                     <div className={cn(
                         "pixel-border-content p-3",
-                         msg.sender === 'me' ? 'bg-secondary' : 'bg-muted'
+                         msg.sender === 'me' ? 'bg-secondary text-secondary-foreground' : 'bg-muted text-muted-foreground'
                       )}
                     >
                       <p className="break-words">{msg.text}</p>
