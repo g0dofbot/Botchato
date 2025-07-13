@@ -147,7 +147,6 @@ export default function ChatPage() {
               <TabsTrigger value="contacts" className="text-base">CONTACTS</TabsTrigger>
               <TabsTrigger value="requests" className="text-base">REQUESTS ({requests.length})</TabsTrigger>
               <TabsTrigger value="find" className="text-base">FIND USER</TabsTrigger>
-              <TabsTrigger value="file" className="text-base">FILE</TabsTrigger>
             </TabsList>
 
             <TabsContent value="contacts" className="flex-grow overflow-y-auto p-4 bg-background/20">
@@ -215,9 +214,6 @@ export default function ChatPage() {
                 </div>
             </TabsContent>
 
-            <TabsContent value="file" className="flex-grow overflow-y-auto bg-background/20">
-              <ContactInfo contact={selectedContact} />
-            </TabsContent>
           </Tabs>
         </aside>
 
