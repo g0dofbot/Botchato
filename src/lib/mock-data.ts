@@ -19,6 +19,35 @@ export interface Contact {
   bio: string;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  username: string;
+}
+
+export interface Request {
+  id: string;
+  name: string;
+}
+
+// All users in the system, for searching
+export const users: User[] = [
+  { id: '1', name: 'Cmdr. Starlight', username: 'STAR-1' },
+  { id: '2', name: 'Agent Cipher', username: 'CIPHER-7' },
+  { id: '3', name: 'Dr. Aris', username: 'DOC-ARIS' },
+  { id: '4', name: 'Rogue AI', username: 'PROMETHEUS' },
+  { id: '5', name: 'Jaxx', username: 'J4XX' },
+  { id: '6', name: 'Oracle', username: 'ORACLE' },
+  { id: '7', name: 'Ghost', username: 'GH0ST' },
+];
+
+// Current pending friend requests
+export const requests: Request[] = [
+    { id: '5', name: 'Jaxx' },
+    { id: '7', name: 'Ghost' },
+]
+
+
 // Encrypt initial messages for demonstration
 export const contacts: Contact[] = [
   {

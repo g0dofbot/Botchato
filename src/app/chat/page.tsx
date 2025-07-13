@@ -4,20 +4,28 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ContactInfo } from '@/components/ContactList';
 import { ChatWindow } from '@/components/ChatWindow';
-import { type Contact, type Message, contacts as mockContacts } from '@/lib/mock-data';
+import { type Contact, type Message, contacts as mockContacts, users as allUsers, requests as mockRequests } from '@/lib/mock-data';
 import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
 import { encrypt } from '@/lib/cipher';
 import { UsersIcon } from '@/components/icons/UsersIcon';
+import { UserPlusIcon } from '@/components/icons/UserPlusIcon';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { UserIcon } from '@/components/icons/UserIcon';
-
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
+  const [requests, setRequests] = useState(mockRequests);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [audioReady, setAudioReady] = useState(false);
   const [theme, setTheme] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredUsers = searchTerm
+    ? allUsers.filter(u => u.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    : [];
 
   useEffect(() => {
     // Select the first contact by default
@@ -92,6 +100,27 @@ export default function ChatPage() {
     setAudioReady(true);
   };
 
+  const handleSendRequest = (userId: string) => {
+    console.log(`Friend request sent to user ${userId}`);
+    // In a real app, you would handle state change here
+  };
+  
+  const handleAcceptRequest = (userId: string) => {
+    console.log(`Friend request from ${userId} accepted.`);
+    setRequests(prev => prev.filter(r => r.id !== userId));
+     const newContact = allUsers.find(u => u.id === userId);
+     if (newContact) {
+        // @ts-ignore
+        setContacts(prev => [...prev, newContact]);
+     }
+  };
+
+  const handleDeclineRequest = (userId: string) => {
+    console.log(`Friend request from ${userId} declined.`);
+    setRequests(prev => prev.filter(r => r.id !== userId));
+  };
+
+
   if (!audioReady) {
     return (
       <div
@@ -118,6 +147,8 @@ export default function ChatPage() {
           <Tabs defaultValue="contacts" className="h-full flex flex-col">
             <TabsList className="w-full justify-start rounded-none">
               <TabsTrigger value="contacts" className="text-base">CONTACTS</TabsTrigger>
+              <TabsTrigger value="requests" className="text-base">REQUESTS ({requests.length})</TabsTrigger>
+              <TabsTrigger value="find" className="text-base">FIND USER</TabsTrigger>
               <TabsTrigger value="file" className="text-base">FILE</TabsTrigger>
             </TabsList>
 
@@ -141,6 +172,48 @@ export default function ChatPage() {
                        &lt; LOG OUT &gt;
                   </Link>
               </div>
+            </TabsContent>
+
+             <TabsContent value="requests" className="flex-grow overflow-y-auto border-r border-primary/30 p-4 bg-background/20 space-y-3">
+              {requests.length > 0 ? requests.map(req => (
+                <div key={req.id} className="p-2 border border-primary/20">
+                  <p className="text-primary mb-2">{req.name} wants to connect.</p>
+                  <div className="flex gap-2">
+                    <Button onClick={() => handleAcceptRequest(req.id)} size="sm" variant="ghost" className="text-xs p-1 h-auto hover:bg-primary/20">ACCEPT</Button>
+                    <Button onClick={() => handleDeclineRequest(req.id)} size="sm" variant="ghost" className="text-xs p-1 h-auto hover:bg-destructive/20 hover:text-destructive">DECLINE</Button>
+                  </div>
+                </div>
+              )) : (
+                <p className="text-primary/50 text-center text-sm pt-4">NO PENDING REQUESTS</p>
+              )}
+            </TabsContent>
+
+             <TabsContent value="find" className="flex-grow overflow-y-auto border-r border-primary/30 p-4 bg-background/20">
+                <div className="space-y-4">
+                    <Input 
+                        type="text" 
+                        placeholder="Search by callsign..." 
+                        className="bg-input border-primary/30 text-primary h-9"
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                    />
+                    <div className="space-y-2">
+                        {filteredUsers.map(user => (
+                            <div key={user.id} className="p-2 border border-primary/20 flex justify-between items-center">
+                                <div>
+                                    <p className="text-primary">{user.name}</p>
+                                    <p className="text-primary/50 text-xs">{user.username}</p>
+                                </div>
+                                <Button size="sm" variant="ghost" className="p-1 h-auto" onClick={() => handleSendRequest(user.id)}>
+                                    <UserPlusIcon className="w-5 h-5" />
+                                </Button>
+                            </div>
+                        ))}
+                         {searchTerm && filteredUsers.length === 0 && (
+                            <p className="text-primary/50 text-center text-sm pt-4">NO USERS FOUND</p>
+                         )}
+                    </div>
+                </div>
             </TabsContent>
 
             <TabsContent value="file" className="flex-grow overflow-y-auto border-r border-primary/30 bg-background/20">
