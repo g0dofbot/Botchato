@@ -9,6 +9,9 @@ import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
 import { encrypt } from '@/lib/cipher';
 import { UsersIcon } from '@/components/icons/UsersIcon';
 import Link from 'next/link';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { UserIcon } from '@/components/icons/UserIcon';
+
 
 export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -109,49 +112,51 @@ export default function ChatPage() {
   return (
     <main className="min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-12 h-screen">
-        {/* Sidebar */}
-        <aside className="col-span-12 md:col-span-3">
-          <div className="border-r border-primary/30 p-4 h-full bg-background/20">
-            <h2 className="text-lg font-bold mb-4 text-primary flex items-center gap-2">
-              <UsersIcon className="w-5 h-5" />
-              CONTACTS
-            </h2>
-            <div className="space-y-2">
-              {contacts.map(contact => (
-                <div 
-                  key={contact.id} 
-                  onClick={() => setSelectedContact(contact)}
-                  className={`cursor-pointer p-2 flex justify-between items-center ${selectedContact?.id === contact.id ? 'bg-primary/20' : 'hover:bg-primary/10'}`}
-                >
-                  <span className={`${selectedContact?.id === contact.id ? 'text-accent-foreground' : 'text-primary'}`}>{contact.name}</span>
-                  <span className={`text-xs ${contact.status === 'online' ? 'text-primary' : 'text-primary/50'}`}>
-                    {contact.status.toUpperCase()}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div className="text-center mt-6">
-                <Link href="/" className="text-primary/50 hover:text-primary text-sm">
-                     &lt; LOG OUT &gt;
-                </Link>
-            </div>
-          </div>
+
+        {/* Sidebar with Tabs */}
+        <aside className="col-span-12 md:col-span-4 lg:col-span-3">
+          <Tabs defaultValue="contacts" className="h-full flex flex-col">
+            <TabsList className="w-full justify-start rounded-none">
+              <TabsTrigger value="contacts" className="text-base">CONTACTS</TabsTrigger>
+              <TabsTrigger value="file" className="text-base">FILE</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="contacts" className="flex-grow overflow-y-auto border-r border-primary/30 p-4 bg-background/20">
+              <div className="space-y-2">
+                {contacts.map(contact => (
+                  <div 
+                    key={contact.id} 
+                    onClick={() => setSelectedContact(contact)}
+                    className={`cursor-pointer p-2 flex justify-between items-center ${selectedContact?.id === contact.id ? 'bg-primary/20' : 'hover:bg-primary/10'}`}
+                  >
+                    <span className={`${selectedContact?.id === contact.id ? 'text-accent-foreground' : 'text-primary'}`}>{contact.name}</span>
+                    <span className={`text-xs ${contact.status === 'online' ? 'text-primary' : 'text-primary/50'}`}>
+                      {contact.status.toUpperCase()}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-6">
+                  <Link href="/" className="text-primary/50 hover:text-primary text-sm">
+                       &lt; LOG OUT &gt;
+                  </Link>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="file" className="flex-grow overflow-y-auto border-r border-primary/30 bg-background/20">
+              <ContactInfo contact={selectedContact} />
+            </TabsContent>
+          </Tabs>
         </aside>
 
         {/* Main Chat Area */}
-        <div className="col-span-12 md:col-span-6">
+        <div className="col-span-12 md:col-span-8 lg:col-span-9">
           <ChatWindow
             contact={selectedContact}
             onSendMessage={handleSendMessage}
           />
         </div>
 
-        {/* Contact Info */}
-        <div className="col-span-12 md:col-span-3">
-          <ContactInfo
-            contact={selectedContact}
-          />
-        </div>
       </div>
     </main>
   );
