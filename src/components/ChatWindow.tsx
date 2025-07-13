@@ -9,6 +9,7 @@ import { MessageRenderer } from './MessageRenderer';
 import { retroEmojis } from '@/lib/emojiList';
 import { SmileIcon } from './icons/SmileIcon';
 import { SendIcon } from './icons/SendIcon';
+import { Textarea } from '@/components/ui/textarea';
 
 interface ChatWindowProps {
   contact: Contact | null;
@@ -26,6 +27,14 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
         scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
   }, [contact?.messages]);
+
+   useEffect(() => {
+    // Auto-resize textarea
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = 'auto';
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+    }
+  }, [newMessage]);
 
   const handleSendMessage = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -63,10 +72,10 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
       </div>
       <div className="flex-grow p-4 overflow-y-auto" ref={scrollAreaRef}>
         <div className="space-y-4">
-            {contact.messages.map((msg, index) => (
+            {contact.messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`p-3 max-w-xs md:max-w-md ${msg.sender === 'me' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'}`}>
-                      <p className="whitespace-pre-wrap text-sm">
+                      <p className="whitespace-pre-wrap text-sm break-words">
                         <MessageRenderer text={msg.text} />
                       </p>
                     </div>
@@ -75,10 +84,10 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
         </div>
       </div>
       <div className="p-4 border-t-2 border-primary/30">
-        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+        <form onSubmit={handleSendMessage} className="flex items-start gap-2">
            <Popover>
             <PopoverTrigger asChild>
-               <button type="button" className='p-2 hover:bg-primary/20 text-primary'>
+               <button type="button" className='p-2 hover:bg-primary/20 text-primary mt-1.5'>
                  <SmileIcon />
                </button>
             </PopoverTrigger>
@@ -99,17 +108,17 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
               </div>
             </PopoverContent>
           </Popover>
-          <textarea
+          <Textarea
             ref={textAreaRef}
             placeholder={`MESSAGE ${contact.name.toUpperCase()}...`}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             autoComplete="off"
-            className="w-full bg-input text-primary p-2 flex-grow border border-primary/30 focus:ring-1 focus:ring-ring focus:outline-none"
+            className="w-full bg-input text-primary p-2 flex-grow border border-primary/30 focus:ring-1 focus:ring-ring focus:outline-none resize-none overflow-y-hidden"
             rows={1}
           />
-          <button type="submit" className="p-2 bg-primary text-primary-foreground hover:bg-primary/80 disabled:opacity-50" disabled={!newMessage.trim()}>
+          <button type="submit" className="p-2 bg-primary text-primary-foreground hover:bg-primary/80 disabled:opacity-50 mt-1.5" disabled={!newMessage.trim()}>
             <SendIcon />
           </button>
         </form>
