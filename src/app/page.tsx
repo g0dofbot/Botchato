@@ -3,12 +3,12 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { RadioTowerIcon } from '@/components/icons/RadioTowerIcon';
+import { TimeBasedAsciiArt } from '@/components/TimeBasedAsciiArt';
 
 export default function LoginPage() {
   const [userId, setUserId] = useState('');
@@ -31,9 +31,7 @@ export default function LoginPage() {
     <main className="min-h-screen flex items-center justify-center p-0">
       <Card className="max-w-md w-full bg-transparent border-primary/30 shadow-none">
         <CardHeader className="pt-6 pb-4">
-          <CardTitle className="text-primary text-center text-lg tracking-widest">
-            BOTROCHAT
-          </CardTitle>
+          <TimeBasedAsciiArt />
         </CardHeader>
         <CardContent className="px-6 pb-6">
           <form onSubmit={handleLogin} className="space-y-6">
