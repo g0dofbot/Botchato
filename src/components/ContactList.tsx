@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Contact } from '@/lib/mock-data';
@@ -33,7 +34,7 @@ export function ContactInfo({ contact }: ContactInfoProps) {
           <p>OFFICER: {contact.officerId}</p>
           <p>LEGAL NAME: {contact.name.toUpperCase()}</p>
           <p>SECURITY CODE: {contact.securityCode}</p>
-          <p>STATUS: <span className={contact.status === 'online' ? 'text-green-400' : 'text-yellow-400'}>{contact.status.toUpperCase()}</span></p>
+          <p>STATUS: <span className={contact.status === 'online' ? 'text-primary' : 'text-muted-foreground'}>{contact.status.toUpperCase()}</span></p>
         </div>
       </div>
       <div className="terminal-panel p-2 flex-grow">

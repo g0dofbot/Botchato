@@ -149,8 +149,8 @@ export default function ChatPage() {
                        <span>&gt; {contact.name.toUpperCase()}</span>
                         <span className={`text-xs px-2 py-1 rounded-full ${
                           contact.status === 'online'
-                            ? 'bg-green-500/20 text-green-400'
-                            : 'bg-yellow-500/20 text-yellow-400'
+                            ? 'bg-primary/20 text-primary'
+                            : 'bg-muted/20 text-muted-foreground'
                         }`}>
                           {contact.status.toUpperCase()}
                         </span>
