@@ -63,9 +63,6 @@ export default function LoginPage() {
                 <RadioTowerIcon className="w-4 h-4 mr-2" />
                 CONNECT
               </Button>
-              <Link href="/join" className="text-primary/80 hover:text-primary text-xs tracking-widest">
-                 NO ACCOUNT? ENLIST HERE
-              </Link>
             </div>
           </form>
         </CardContent>
