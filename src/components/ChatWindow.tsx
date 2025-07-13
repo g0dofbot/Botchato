@@ -54,7 +54,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
 
   if (!contact) {
     return (
-      <div className="h-full flex items-center justify-center terminal-panel">
+      <div className="h-full flex items-center justify-center terminal-panel text-primary">
         <p>SELECT A CONTACT TO BEGIN COMMUNICATION.</p>
       </div>
     );
@@ -63,7 +63,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   return (
     <div className="h-[70vh] flex flex-col gap-2">
       <ScrollArea className="flex-grow terminal-panel p-2" ref={scrollAreaRef}>
-        <div className="space-y-2 font-mono text-lg">
+        <div className="space-y-2 font-mono text-lg text-primary">
           {contact.messages.map((msg) => (
              <p key={msg.id} className="whitespace-pre-wrap">
                <MessageRenderer text={msg.text} />
@@ -79,12 +79,12 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           autoComplete="off"
-          className="flex-grow bg-black/50 border-primary rounded-none h-24 resize-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0"
+          className="flex-grow bg-black/50 border-primary rounded-none h-24 resize-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 text-primary"
         />
         <div className="flex gap-2">
            <Popover>
             <PopoverTrigger asChild>
-               <Button type="button" variant="outline" className="bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
+               <Button type="button" variant="outline" className="bg-black/50 border-primary rounded-none h-full px-8 text-lg text-primary hover:bg-primary/20 hover:text-primary">
                  EMOJI
                </Button>
             </PopoverTrigger>
@@ -105,7 +105,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
               </div>
             </PopoverContent>
           </Popover>
-          <Button type="submit" className="flex-grow bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
+          <Button type="submit" className="flex-grow bg-black/50 border-primary rounded-none h-full px-8 text-lg text-primary hover:bg-primary/20 hover:text-primary">
             SEND
           </Button>
         </div>

@@ -147,10 +147,10 @@ export default function ChatPage() {
                         className={`cursor-pointer p-2 flex justify-between items-center ${selectedContact?.id === contact.id ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/20'}`}
                       >
                        <span>&gt; {contact.name.toUpperCase()}</span>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
+                        <span className={`text-xs px-2 py-1 ${
                           contact.status === 'online'
                             ? 'bg-primary/20 text-primary'
-                            : 'bg-muted/20 text-muted-foreground'
+                            : 'bg-muted text-muted-foreground'
                         }`}>
                           {contact.status.toUpperCase()}
                         </span>

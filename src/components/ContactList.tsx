@@ -11,14 +11,14 @@ interface ContactInfoProps {
 export function ContactInfo({ contact }: ContactInfoProps) {
   if (!contact) {
     return (
-      <div className="h-full flex items-center justify-center terminal-panel">
+      <div className="h-full flex items-center justify-center terminal-panel text-primary">
         <p>AWAITING SUBJECT IDENTIFICATION...</p>
       </div>
     );
   }
 
   return (
-    <div className="h-full flex flex-col gap-2 text-lg">
+    <div className="h-full flex flex-col gap-2 text-lg text-primary">
       <div className="terminal-panel p-2 flex gap-4">
         <div className="w-24 h-24 border border-primary p-1 bg-black">
            <Image
