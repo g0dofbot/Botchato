@@ -2,7 +2,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { retroEmojis } from '@/lib/emojiList';
 import { decrypt } from '@/lib/cipher';
 
@@ -10,7 +9,7 @@ interface MessageRendererProps {
   text: string;
 }
 
-const emojiMap = new Map(retroEmojis.map(emoji => [emoji.name.toLowerCase(), emoji.path]));
+const emojiMap = new Map(retroEmojis.map(emoji => [emoji.name.toLowerCase(), emoji.Icon]));
 
 export function MessageRenderer({ text }: MessageRendererProps) {
   const decryptedText = decrypt(text);
@@ -27,17 +26,12 @@ export function MessageRenderer({ text }: MessageRendererProps) {
           return <span key={index}>{part}</span>;
         }
 
-        const emojiPath = emojiMap.get(part.toLowerCase());
-        if (emojiPath) {
+        const EmojiIcon = emojiMap.get(part.toLowerCase());
+        if (EmojiIcon) {
           return (
-            <Image
+             <EmojiIcon
               key={index}
-              src={emojiPath}
-              alt={`:${part}:`}
-              width={16}
-              height={16}
-              className="inline-block mx-1 align-text-bottom"
-              style={{ imageRendering: 'pixelated' }}
+              className="inline-block mx-1 align-text-bottom w-4 h-4"
             />
           );
         }

@@ -5,7 +5,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import type { Contact } from '@/lib/mock-data';
 import { playMessageSentSound } from '@/lib/sounds';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import Image from 'next/image';
 import { MessageRenderer } from './MessageRenderer';
 import { retroEmojis } from '@/lib/emojiList';
 import { SmileIcon } from './icons/SmileIcon';
@@ -91,9 +90,9 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                     type="button"
                     title={emoji.name}
                     onClick={() => handleEmojiSelect(emoji.name)}
-                    className="p-2 hover:bg-primary/20 rounded-sm"
+                    className="p-2 hover:bg-primary/20 rounded-sm flex items-center justify-center"
                   >
-                    <Image src={emoji.path} alt={emoji.name} width={24} height={24} />
+                    <emoji.Icon className="w-6 h-6 text-primary" />
                     <span className="sr-only">{emoji.name}</span>
                   </button>
                 ))}
