@@ -1,17 +1,18 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import { Nunito } from 'next/font/google';
+import { PT_Sans } from 'next/font/google';
 
-const nunito = Nunito({
+const ptSans = PT_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-nunito',
+  variable: '--font-pt-sans',
+  weight: ['400', '700'],
 });
 
 export const metadata: Metadata = {
-  title: 'Fun Messenger',
-  description: 'A fun messaging app for everyone.',
+  title: 'Retro Messenger',
+  description: 'A retro messaging app.',
 };
 
 export default function RootLayout({
@@ -20,7 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${nunito.variable}`}>
+    <html lang="en" className={`${ptSans.variable}`}>
+      <head>
+        <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+      </head>
       <body>
         {children}
         <Toaster />

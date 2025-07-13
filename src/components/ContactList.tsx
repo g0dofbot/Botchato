@@ -3,8 +3,6 @@
 
 import type { Contact } from '@/lib/mock-data';
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
 
 interface ContactInfoProps {
   contact: Contact | null;
@@ -13,46 +11,46 @@ interface ContactInfoProps {
 export function ContactInfo({ contact }: ContactInfoProps) {
   if (!contact) {
     return (
-      <Card className="h-full">
-        <CardContent className="h-full flex items-center justify-center text-muted-foreground">
-          <p>Select a friend to see their info.</p>
-        </CardContent>
-      </Card>
+      <div className="nes-container is-dark is-centered h-full">
+        <p>Select a friend to see their info.</p>
+      </div>
     );
   }
 
   return (
-    <Card className="h-full">
-        <CardHeader className="items-center text-center">
-            <div className="relative">
-                <Image
-                    src={contact.avatar}
-                    alt={`Avatar of ${contact.name}`}
-                    width={96}
-                    height={96}
-                    className="rounded-full border-4 border-white shadow-md"
-                    data-ai-hint="cute avatar"
-                />
-                 <span className={cn(
-                    "absolute bottom-1 right-1 block w-4 h-4 rounded-full border-2 border-white", 
-                    contact.status === 'online' ? 'bg-green-500' : 'bg-slate-400'
-                )}></span>
+    <div className="nes-container with-title is-dark h-full">
+        <p className="title">{contact.name}'s Info</p>
+        <div className="pt-4 text-center">
+            <Image
+                src={contact.avatar}
+                alt={`Avatar of ${contact.name}`}
+                width={96}
+                height={96}
+                className="mx-auto"
+                style={{ imageRendering: 'pixelated' }}
+                data-ai-hint="cute avatar"
+            />
+            <p className="mt-4 text-lg">{contact.name}</p>
+            <p className="nes-text is-disabled">@{contact.username}</p>
+            <div className='mt-2'>
+              <a href="#"><i className="nes-icon twitter is-small"></i></a>
+              <a href="#"><i className="nes-icon facebook is-small"></i></a>
+              <a href="#"><i className="nes-icon instagram is-small"></i></a>
+              <a href="#"><i className="nes-icon github is-small"></i></a>
+              <a href="#"><i className="nes-icon gmail is-small"></i></a>
             </div>
-            <CardTitle className="text-xl mt-2">{contact.name}</CardTitle>
-            <p className="text-sm text-muted-foreground">@{contact.username}</p>
-        </CardHeader>
-        <CardContent className="text-sm text-center">
-            <div className="space-y-4">
-                <div>
-                    <h4 className="font-semibold text-slate-800">About Me</h4>
-                    <p className="text-muted-foreground">{contact.bio}</p>
-                </div>
-                 <div>
-                    <h4 className="font-semibold text-slate-800">Favorite Food</h4>
-                    <p className="text-muted-foreground">{contact.favoriteFood}</p>
-                </div>
+        </div>
+
+        <div className="mt-6 text-sm">
+            <div className="nes-container is-dark with-title">
+                <p className="title">Bio</p>
+                <p className="text-xs">{contact.bio}</p>
             </div>
-        </CardContent>
-    </Card>
+             <div className="nes-container is-dark with-title mt-4">
+                <p className="title">Fav Food</p>
+                <p className="text-xs">{contact.favoriteFood}</p>
+            </div>
+        </div>
+    </div>
   );
 }

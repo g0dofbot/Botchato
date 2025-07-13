@@ -1,68 +1,41 @@
+/* TODO: Move to tailwind config */
+@import "nes.css/css/nes.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 210 40% 10%;
+    --background: 240 70% 15%; /* #191970 - Dark Navy Blue */
+    --foreground: 0 0% 80%; /* #D3D3D3 - Light Grey */
 
-    --card: 0 0% 100%;
-    --card-foreground: 210 40% 10%;
+    --card: 240 70% 15%;
+    --card-foreground: 0 0% 80%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 40% 10%;
+    --popover: 240 70% 10%;
+    --popover-foreground: 0 0% 80%;
 
-    --primary: 22 95% 55%; /* Warm Orange */
-    --primary-foreground: 210 40% 98%;
+    --primary: 60 100% 75%; /* #FFFF80 - Pale Yellow */
+    --primary-foreground: 240 70% 15%; /* Dark Navy Blue for text on yellow */
 
-    --secondary: 210 40% 90%;
-    --secondary-foreground: 210 40% 10%;
+    --secondary: 240 30% 25%;
+    --secondary-foreground: 0 0% 80%;
 
-    --muted: 210 40% 94%;
-    --muted-foreground: 210 40% 45%;
+    --muted: 240 30% 25%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 210 40% 90%;
-    --accent-foreground: 210 40% 10%;
+    --accent: 240 30% 35%;
+    --accent-foreground: 60 100% 75%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 210 40% 85%;
-    --input: 210 40% 90%;
-    --ring: 22 95% 55%;
+    --border: 240 30% 35%;
+    --input: 240 30% 25%;
+    --ring: 60 100% 75%;
     
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 210 40% 10%;
-    --foreground: 210 40% 98%;
-
-    --card: 210 40% 5%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 210 40% 5%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 22 95% 55%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 15%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 210 40% 15%;
-    --muted-foreground: 210 40% 65%;
-    
-    --accent: 210 40% 15%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 210 40% 20%;
-    --input: 210 40% 15%;
-    --ring: 22 95% 55%;
+    --radius: 0rem;
   }
 }
 
@@ -72,8 +45,27 @@
   }
   body {
     @apply bg-background text-foreground font-body;
+    background-color: #191970; /* Dark Navy Blue */
+    color: #D3D3D3; /* Light Grey */
   }
   ::selection {
     @apply bg-primary text-primary-foreground;
   }
+
+  h1, h2, h3, h4, h5, h6, .nes-btn, .nes-input, .nes-textarea, .nes-select, .nes-progress, .nes-badge, .nes-container, .nes-table, a, .nes-radio, .nes-checkbox {
+    font-family: 'Press Start 2P', cursive !important;
+  }
+}
+
+.is-dark.nes-container.with-title>.title {
+  color: #fff;
+  background-color: #191970;
+}
+
+.nes-btn {
+  color: #212529; /* Default nes.css text color */
+}
+
+.nes-btn.is-primary {
+  color: #191970;
 }

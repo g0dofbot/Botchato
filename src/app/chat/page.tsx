@@ -6,11 +6,9 @@ import { ContactInfo } from '@/components/ContactList';
 import { ChatWindow } from '@/components/ChatWindow';
 import { type Contact, type Message, contacts as mockContacts } from '@/lib/mock-data';
 import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
 import { encrypt } from '@/lib/cipher';
-import { Users, LogOut } from 'lucide-react';
+import { UsersIcon } from '@/components/icons/UsersIcon';
+import Link from 'next/link';
 
 export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -27,6 +25,7 @@ export default function ChatPage() {
   const handleSendMessage = useCallback((messageText: string) => {
     if (!selectedContact) return;
     
+    // In a real E2EE app, you'd use a library like libsignal here.
     const encryptedText = encrypt(messageText);
 
     const newMessage: Message = {
@@ -47,7 +46,7 @@ export default function ChatPage() {
     setTimeout(() => {
       const replyMessage: Message = {
         id: Date.now() + 1,
-        text: `${selectedContact.name.toUpperCase()}: ${encrypt('ROGER THAT! OVER.')}`, // Encrypt reply
+        text: `${selectedContact.name.toUpperCase()}: ${encrypt('ROGER THAT! OVER.')}`,
         sender: 'contact',
         timestamp: new Date().toISOString(),
       };
@@ -77,72 +76,58 @@ export default function ChatPage() {
   if (!audioReady) {
     return (
       <div
-        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4 bg-blue-50"
+        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4"
         onClick={handleInitAudio}
       >
-        <Card className="max-w-md bg-white shadow-lg border-none text-slate-700">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Enable Sound?</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground mb-4">Click here to enable sound notifications for new messages.</p>
-            <Button>
+        <div className="nes-container is-dark with-title max-w-md">
+            <p className="title">Audio</p>
+            <p className='mb-4'>Click to enable sound effects.</p>
+            <button className="nes-btn is-primary">
               Enable Audio
-            </Button>
-          </CardContent>
-        </Card>
+            </button>
+        </div>
       </div>
     );
   }
   
   return (
-    <main className="p-2 md:p-4 min-h-screen bg-muted/40">
-       <div className="grid grid-cols-12 gap-4 max-w-7xl mx-auto">
+    <main className="p-2 md:p-4 min-h-screen">
+       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 max-w-7xl mx-auto">
          {/* Sidebar */}
-         <aside className="col-span-3">
-            <Card className="h-full">
-              <CardHeader className='flex-row items-center justify-between'>
-                <div className='flex items-center gap-2'>
-                  <Users className="text-primary" />
-                  <CardTitle className='text-xl'>Friends</CardTitle>
-                </div>
-                 <Button variant="ghost" size="icon" asChild>
-                    <a href="/">
-                      <LogOut className="text-muted-foreground" />
-                    </a>
-                 </Button>
-              </CardHeader>
-              <CardContent>
-                 <div className="space-y-2">
-                   {contacts.map(contact => (
-                     <div 
-                        key={contact.id} 
-                        onClick={() => setSelectedContact(contact)}
-                        className={cn(
-                          'cursor-pointer p-3 flex justify-between items-center rounded-lg transition-colors',
-                          selectedContact?.id === contact.id ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'
-                        )}
-                      >
-                       <span className="font-semibold">{contact.name}</span>
-                        <div className='flex items-center gap-2'>
-                           <span className={cn('text-xs font-bold', contact.status === 'online' ? 'text-green-500' : 'text-slate-400')}>
-                            {contact.status.toUpperCase()}
-                           </span>
-                           <span className={cn(
-                              "w-2 h-2 rounded-full", 
-                              contact.status === 'online' ? 'bg-green-500' : 'bg-slate-400'
-                            )}>
-                           </span>
-                        </div>
-                     </div>
-                   ))}
-                 </div>
-              </CardContent>
-            </Card>
+         <aside className="col-span-12 md:col-span-3">
+            <div className="nes-container with-title is-dark h-full">
+              <p className='title flex items-center gap-2'>
+                <i className="nes-icon is-small star"></i>
+                <span>Contacts</span>
+                <i className="nes-icon is-small star"></i>
+              </p>
+              <div className="space-y-2">
+                {contacts.map(contact => (
+                  <div 
+                     key={contact.id} 
+                     onClick={() => setSelectedContact(contact)}
+                     className={`cursor-pointer p-3 flex justify-between items-center rounded-lg ${selectedContact?.id === contact.id ? 'bg-blue-800' : 'hover:bg-blue-900'}`}
+                   >
+                    <div className='flex items-center gap-2'>
+                       <i className={`nes-icon ${contact.status === 'online' ? 'heart' : 'close'} is-small`}></i>
+                       <span className={`nes-text ${selectedContact?.id === contact.id ? 'is-primary' : ''}`}>{contact.name}</span>
+                    </div>
+                     <span className={`nes-badge ${contact.status === 'online' ? '' : 'is-dark'}`}>
+                       <span className={contact.status === 'online' ? 'is-success' : 'is-error'}>{contact.status.toUpperCase()}</span>
+                     </span>
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-6">
+                 <Link href="/" className="nes-btn">
+                      Log Out
+                 </Link>
+              </div>
+            </div>
          </aside>
 
         {/* Main Chat Area */}
-        <div className="col-span-6">
+        <div className="col-span-12 md:col-span-6">
             <ChatWindow
               contact={selectedContact}
               onSendMessage={handleSendMessage}
@@ -150,7 +135,7 @@ export default function ChatPage() {
         </div>
 
         {/* Contact Info */}
-        <div className="col-span-3">
+        <div className="col-span-12 md:col-span-3">
           <ContactInfo
             contact={selectedContact}
           />
