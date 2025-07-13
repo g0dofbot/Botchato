@@ -19,6 +19,8 @@ interface ChatWindowProps {
 export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -29,8 +31,8 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
     }
   }, [contact?.messages]);
 
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSendMessage = (e?: React.FormEvent) => {
+    e?.preventDefault();
     if (newMessage.trim() && contact) {
       onSendMessage(newMessage);
       setNewMessage('');
@@ -38,8 +40,16 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
     }
   };
   
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   const handleEmojiSelect = (emojiName: string) => {
     setNewMessage(prev => prev + `:${emojiName.toLowerCase()}:`);
+    textAreaRef.current?.focus();
   }
 
   if (!contact) {
@@ -63,16 +73,18 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
       </ScrollArea>
       <form onSubmit={handleSendMessage} className="flex flex-col gap-2">
         <Textarea
+          ref={textAreaRef}
           placeholder="DON'T THINK TOO MUCH ABOUT IT|"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
           autoComplete="off"
           className="flex-grow bg-black/50 border-primary rounded-none h-24 resize-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0"
         />
         <div className="flex gap-2">
            <Popover>
             <PopoverTrigger asChild>
-               <Button variant="outline" className="bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
+               <Button type="button" variant="outline" className="bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
                  EMOJI
                </Button>
             </PopoverTrigger>
