@@ -28,8 +28,8 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="p-4 min-h-screen flex items-center justify-center">
-      <Card className="max-w-md w-full bg-card border-border shadow-none rounded-none">
+    <main className="min-h-screen flex items-center justify-center p-0">
+      <Card className="max-w-md w-full bg-transparent border-primary/30 shadow-none">
         <CardHeader className="pt-6 pb-4">
           <CardTitle className="text-primary text-center text-lg tracking-widest">
             BPD SECURE MESSAGING
@@ -42,7 +42,7 @@ export default function LoginPage() {
               <Input
                 id="userId"
                 type="text"
-                className="bg-card border-input text-primary rounded-none h-9"
+                className="bg-input border-primary/30 text-primary h-9"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
               />
@@ -52,14 +52,14 @@ export default function LoginPage() {
               <Input
                 id="password"
                 type="password"
-                className="bg-card border-input text-primary rounded-none h-9"
+                className="bg-input border-primary/30 text-primary h-9"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             {error && <p className="text-destructive text-sm">{error}</p>}
             <div className='flex flex-col items-center gap-4 pt-4'>
-              <Button type="submit" variant="ghost" size="sm" className="w-full text-primary hover:bg-transparent hover:text-primary tracking-widest p-0 justify-center h-auto">
+              <Button type="submit" variant="ghost" size="sm" className="w-full text-primary hover:bg-primary/20 hover:text-primary tracking-widest p-0 justify-center h-auto">
                 <RadioTowerIcon className="w-4 h-4 mr-2" />
                 CONNECT
               </Button>

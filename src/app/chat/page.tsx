@@ -14,7 +14,7 @@ export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [audioReady, setAudioReady] = useState(false);
-  const [theme, setTheme] = useState('theme-green');
+  const [theme, setTheme] = useState('');
 
   useEffect(() => {
     // Select the first contact by default
@@ -25,14 +25,16 @@ export default function ChatPage() {
 
   useEffect(() => {
     if (selectedContact) {
-      setTheme(selectedContact.status === 'online' ? 'theme-green' : 'theme-sepia');
+      setTheme(selectedContact.status === 'online' ? '' : 'theme-sepia');
     }
   }, [selectedContact]);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.body.className = '';
-      document.body.classList.add(theme);
+      if(theme) {
+        document.body.classList.add(theme);
+      }
     }
   }, [theme]);
 
@@ -106,10 +108,10 @@ export default function ChatPage() {
   
   return (
     <main className="min-h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-12 h-screen">
         {/* Sidebar */}
         <aside className="col-span-12 md:col-span-3">
-          <div className="border border-primary/30 p-4 h-full bg-background/20">
+          <div className="border-r border-primary/30 p-4 h-full bg-background/20">
             <h2 className="text-lg font-bold mb-4 text-primary flex items-center gap-2">
               <UsersIcon className="w-5 h-5" />
               CONTACTS
