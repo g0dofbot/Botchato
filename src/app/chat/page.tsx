@@ -141,9 +141,9 @@ export default function ChatPage() {
       <div className="grid grid-cols-1 md:grid-cols-12 h-screen">
 
         {/* Sidebar with Tabs */}
-        <aside className="col-span-12 md:col-span-4 lg:col-span-3 border-r border-primary/30">
+        <aside className="col-span-12 md:col-span-4 lg:col-span-3 border-r border-primary/30 flex flex-col">
           <Tabs defaultValue="contacts" className="h-full flex flex-col">
-            <TabsList className="w-full justify-start rounded-none">
+            <TabsList className="w-full justify-start rounded-none flex-shrink-0">
               <TabsTrigger value="contacts" className="text-base">CONTACTS</TabsTrigger>
               <TabsTrigger value="requests" className="text-base">REQUESTS ({requests.length})</TabsTrigger>
               <TabsTrigger value="find" className="text-base">FIND USER</TabsTrigger>
@@ -179,6 +179,7 @@ export default function ChatPage() {
                   <div className="flex gap-2">
                     <Button onClick={() => handleAcceptRequest(req.id)} size="sm" variant="ghost" className="text-xs p-1 h-auto hover:bg-primary/20">ACCEPT</Button>
                     <Button onClick={() => handleDeclineRequest(req.id)} size="sm" variant="ghost" className="text-xs p-1 h-auto hover:bg-destructive/20 hover:text-destructive">DECLINE</Button>
+
                   </div>
                 </div>
               )) : (
