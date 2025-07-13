@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { encrypt } from '@/lib/cipher';
 
 export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -29,7 +30,7 @@ export default function ChatPage() {
 
     const newMessage: Message = {
       id: Date.now(),
-      text: `YOU: ${messageText}`,
+      text: `YOU: ${encrypt(messageText)}`, // Encrypt the message text
       sender: 'me',
       timestamp: new Date().toISOString(),
     };
@@ -45,7 +46,7 @@ export default function ChatPage() {
     setTimeout(() => {
       const replyMessage: Message = {
         id: Date.now() + 1,
-        text: `${selectedContact.name.toUpperCase()}: ROGER THAT! OVER.`,
+        text: `${selectedContact.name.toUpperCase()}: ${encrypt('ROGER THAT! OVER.')}`, // Encrypt reply
         sender: 'contact',
         timestamp: new Date().toISOString(),
       };

@@ -1,8 +1,10 @@
+
 'use client';
 
 import React from 'react';
 import Image from 'next/image';
 import { retroEmojis } from '@/lib/emojiList';
+import { decrypt } from '@/lib/cipher';
 
 interface MessageRendererProps {
   text: string;
@@ -11,10 +13,11 @@ interface MessageRendererProps {
 const emojiMap = new Map(retroEmojis.map(emoji => [emoji.name.toLowerCase(), emoji.path]));
 
 export function MessageRenderer({ text }: MessageRendererProps) {
+  const decryptedText = decrypt(text);
   // Regex to find :emoji_name: patterns
   const emojiRegex = /:([a-zA-Z0-9_-]+):/g;
   
-  const parts = text.split(emojiRegex);
+  const parts = decryptedText.split(emojiRegex);
 
   return (
     <>
