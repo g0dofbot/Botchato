@@ -9,6 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioTowerIcon } from '@/components/icons/RadioTowerIcon';
 import { TimeBasedAsciiArt } from '@/components/TimeBasedAsciiArt';
+import { UserPlusIcon } from '@/components/icons/UserPlusIcon';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [userId, setUserId] = useState('');
@@ -63,6 +65,10 @@ export default function LoginPage() {
                   <RadioTowerIcon className="w-4 h-4 mr-2" />
                   CONNECT
                 </Button>
+                <Link href="/join" className="text-primary/50 hover:text-primary text-sm flex items-center gap-2">
+                  <UserPlusIcon className="w-4 h-4" />
+                  CREATE ACCOUNT
+                </Link>
               </div>
             </form>
           </CardContent>
