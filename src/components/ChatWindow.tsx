@@ -17,7 +17,7 @@ interface ChatWindowProps {
   onSendMessage: (message: string) => void;
 }
 
-const emojis = ['😀', '😂', '👍', '❤️', '🎉', '🔥', '🚀', '⭐', '❤️‍🩹', '💯', '👋', '💀'];
+const emojis = [':)', ':(', ':D', ':O', ';)', ':P', '<3', '^_^', 'o_O', 'T_T', '8)', 'B)'];
 
 export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
@@ -42,7 +42,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   };
   
   const handleEmojiSelect = (emoji: string) => {
-    setNewMessage(prev => prev + emoji);
+    setNewMessage(prev => prev + emoji + ' ');
   }
 
   if (!contact) {
@@ -86,13 +86,13 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
               </Button>
             </PopoverTrigger>
             <PopoverContent>
-              <div className="grid grid-cols-6 gap-2 text-2xl">
+              <div className="grid grid-cols-4 gap-2 text-lg font-body">
                 {emojis.map(emoji => (
                   <button
                     key={emoji}
                     type="button"
                     onClick={() => handleEmojiSelect(emoji)}
-                    className="rounded-md hover:bg-muted transition-colors"
+                    className="rounded-md p-2 hover:bg-muted transition-colors"
                   >
                     {emoji}
                   </button>
