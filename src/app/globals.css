@@ -3,63 +3,75 @@
 @tailwind utilities;
 
 body {
-  font-family: 'PT Sans', 'VT323', monospace;
+  font-family: 'VT323', monospace;
   background-color: hsl(var(--background));
+  background-image:
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 2px, 3px 100%;
 }
 
 @layer base {
   :root {
-    --background: 40 10% 5%;
-    --foreground: 45 50% 85%;
-    --card: 40 10% 8%;
-    --card-foreground: 45 50% 85%;
-    --popover: 40 10% 8%;
-    --popover-foreground: 45 50% 85%;
-    --primary: 35 60% 60%;
-    --primary-foreground: 40 10% 5%;
-    --secondary: 40 10% 15%;
-    --secondary-foreground: 45 50% 90%;
-    --muted: 40 10% 12%;
-    --muted-foreground: 45 50% 70%;
-    --accent: 35 70% 50%;
-    --accent-foreground: 40 10% 5%;
+    --background: 120 100% 3%;
+    --foreground: 120 100% 50%;
+    
+    --card: 120 5% 7%;
+    --card-foreground: 120 100% 50%;
+    
+    --popover: 120 5% 7%;
+    --popover-foreground: 120 100% 50%;
+    
+    --primary: 120 100% 50%;
+    --primary-foreground: 120 100% 5%;
+    
+    --secondary: 120 10% 15%;
+    --secondary-foreground: 120 100% 50%;
+    
+    --muted: 120 5% 12%;
+    --muted-foreground: 120 100% 40%;
+    
+    --accent: 120 80% 60%;
+    --accent-foreground: 120 100% 5%;
+    
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 40 10% 20%;
-    --input: 40 10% 15%;
-    --ring: 35 60% 60%;
-    --chart-1: 35 70% 50%;
-    --chart-2: 35 60% 45%;
-    --chart-3: 35 80% 55%;
-    --chart-4: 35 65% 60%;
-    --chart-5: 35 75% 55%;
-    --radius: 0.3rem;
+    
+    --border: 120 100% 30%;
+    --input: 120 5% 10%;
+    --ring: 120 100% 50%;
+    
+    --radius: 0rem;
   }
+
   .dark {
-    --background: 40 10% 5%;
-    --foreground: 45 50% 85%;
-    --card: 40 10% 8%;
-    --card-foreground: 45 50% 85%;
-    --popover: 40 10% 8%;
-    --popover-foreground: 45 50% 85%;
-    --primary: 35 60% 60%;
-    --primary-foreground: 40 10% 5%;
-    --secondary: 40 10% 15%;
-    --secondary-foreground: 45 50% 90%;
-    --muted: 40 10% 12%;
-    --muted-foreground: 45 50% 70%;
-    --accent: 35 70% 50%;
-    --accent-foreground: 40 10% 5%;
+    --background: 120 100% 3%;
+    --foreground: 120 100% 50%;
+    
+    --card: 120 5% 7%;
+    --card-foreground: 120 100% 50%;
+    
+    --popover: 120 5% 7%;
+    --popover-foreground: 120 100% 50%;
+    
+    --primary: 120 100% 50%;
+    --primary-foreground: 120 100% 5%;
+    
+    --secondary: 120 10% 15%;
+    --secondary-foreground: 120 100% 50%;
+    
+    --muted: 120 5% 12%;
+    --muted-foreground: 120 100% 40%;
+    
+    --accent: 120 80% 60%;
+    --accent-foreground: 120 100% 5%;
+    
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 40 10% 20%;
-    --input: 40 10% 15%;
-    --ring: 35 60% 60%;
-    --chart-1: 35 70% 50%;
-    --chart-2: 35 60% 45%;
-    --chart-3: 35 80% 55%;
-    --chart-4: 35 65% 60%;
-    --chart-5: 35 75% 55%;
+    
+    --border: 120 100% 30%;
+    --input: 120 5% 10%;
+    --ring: 120 100% 50%;
   }
 }
 
@@ -70,21 +82,22 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  ::selection {
+    @apply bg-primary text-primary-foreground;
+  }
 }
 
 @layer components {
-  .nes-balloon {
-    @apply relative border-4 border-foreground bg-background p-4;
-    image-rendering: pixelated;
+  .terminal-container {
+    @apply bg-black/50 border-2 border-primary p-1;
+    box-shadow: 0 0 15px 2px hsl(var(--primary) / 0.5), inset 0 0 15px 2px hsl(var(--primary) / 0.5);
   }
-  .nes-balloon::after {
-    @apply absolute bottom-[-20px] h-0 w-0 border-8 border-transparent;
-    content: "";
+  
+  .terminal-panel {
+    @apply border border-primary;
   }
-  .from-left::after {
-    @apply left-4 border-t-foreground;
-  }
-  .from-right::after {
-    @apply right-4 border-t-foreground;
+
+  .terminal-header {
+    @apply text-primary uppercase px-2 py-1;
   }
 }

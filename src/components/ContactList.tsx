@@ -1,96 +1,44 @@
 'use client';
 
 import type { Contact } from '@/lib/mock-data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
-import { Separator } from '@/components/ui/separator';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { UserIcon } from '@/components/icons/UserIcon';
-import { UserPlusIcon } from '@/components/icons/UserPlusIcon';
-import { SettingsIcon } from '@/components/icons/SettingsIcon';
-import { UsersIcon } from '@/components/icons/UsersIcon';
+import Image from 'next/image';
 
-
-interface ContactListProps {
-  contacts: Contact[];
-  selectedContact: Contact | null;
-  onSelectContact: (contact: Contact) => void;
+interface ContactInfoProps {
+  contact: Contact | null;
 }
 
-export function ContactList({ contacts, selectedContact, onSelectContact }: ContactListProps) {
+export function ContactInfo({ contact }: ContactInfoProps) {
+  if (!contact) {
+    return (
+      <div className="h-full flex items-center justify-center terminal-panel">
+        <p>AWAITING SUBJECT IDENTIFICATION...</p>
+      </div>
+    );
+  }
+
   return (
-    <Card className="h-full flex flex-col">
-      <CardHeader className="flex-shrink-0">
-        <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <UsersIcon />
-            Contacts
-          </div>
-          <TooltipProvider>
-            <div className="flex items-center gap-1">
-               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <UserPlusIcon />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Add Friend</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <UserIcon />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Profile</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <SettingsIcon />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Settings</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          </TooltipProvider>
-        </CardTitle>
-      </CardHeader>
-      <Separator />
-      <CardContent className="p-0 flex-grow">
-        <ScrollArea className="h-[calc(80vh-120px)]">
-          <ul className="p-2 space-y-1">
-            {contacts.map((contact) => (
-              <li
-                key={contact.id}
-                onClick={() => onSelectContact(contact)}
-                className={cn(
-                  "p-3 rounded-md cursor-pointer transition-colors flex items-center gap-4",
-                  selectedContact?.id === contact.id
-                    ? 'bg-primary text-primary-foreground'
-                    : 'hover:bg-muted'
-                )}
-              >
-                <UserIcon />
-                <span>{contact.name}</span>
-              </li>
-            ))}
-          </ul>
-        </ScrollArea>
-      </CardContent>
-    </Card>
+    <div className="h-full flex flex-col gap-2 text-lg">
+      <div className="terminal-panel p-2 flex gap-4">
+        <div className="w-24 h-24 border border-primary p-1 bg-black">
+           <Image
+            src={contact.avatar}
+            alt={`Mugshot of ${contact.name}`}
+            width={96}
+            height={96}
+            className="w-full h-full object-cover"
+            data-ai-hint="pixelated portrait"
+          />
+        </div>
+        <div className="space-y-1">
+          <p>OFFICER: {contact.officerId}</p>
+          <p>LEGAL NAME: {contact.name.toUpperCase()}</p>
+          <p>SECURITY CODE: {contact.securityCode}</p>
+          <p>PERSONAL WEAPON: {contact.weapon}</p>
+        </div>
+      </div>
+      <div className="terminal-panel p-2 flex-grow">
+        <p>{contact.bio}</p>
+      </div>
+    </div>
   );
 }
