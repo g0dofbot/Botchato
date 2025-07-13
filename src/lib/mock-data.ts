@@ -9,6 +9,7 @@ export interface Contact {
   id: string;
   name: string;
   avatar: string; 
+  status: 'online' | 'offline';
   messages: Message[];
   // New fields for the info panel
   officerId: string;
@@ -22,6 +23,7 @@ export const contacts: Contact[] = [
     id: '1',
     name: 'Player 2',
     avatar: 'https://placehold.co/96x96.png',
+    status: 'online',
     officerId: 'P2-ARCADE',
     securityCode: '48532695-CF',
     weapon: 'JOYSTICK',
@@ -36,6 +38,7 @@ export const contacts: Contact[] = [
     id: '2',
     name: 'Princess Peach',
     avatar: 'https://placehold.co/96x96.png',
+    status: 'online',
     officerId: 'MUSH-KING-01',
     securityCode: 'PEACH-1985-ND',
     weapon: 'PARASOL',
@@ -49,6 +52,7 @@ export const contacts: Contact[] = [
     id: '3',
     name: 'Toad',
     avatar: 'https://placehold.co/96x96.png',
+    status: 'offline',
     officerId: 'CIV-TOAD-03',
     securityCode: '84591238-MK',
     weapon: 'MUSHROOM',
@@ -64,6 +68,7 @@ export const contacts: Contact[] = [
     id: '4',
     name: 'Bowser',
     avatar: 'https://placehold.co/96x96.png',
+    status: 'offline',
     officerId: 'HOSTILE-01',
     securityCode: 'KOOPA-KING-XX',
     weapon: 'FIRE BREATH',

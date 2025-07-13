@@ -8,6 +8,7 @@ import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 export default function Home() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -90,9 +91,11 @@ export default function Home() {
       </div>
     );
   }
+  
+  const themeClass = selectedContact?.status === 'offline' ? 'theme-sepia' : '';
 
   return (
-    <main className="p-2 md:p-4 min-h-screen flex flex-col items-center justify-center">
+    <main className={cn("p-2 md:p-4 min-h-screen flex flex-col items-center justify-center", themeClass)}>
       <div className="w-full max-w-7xl terminal-container">
         <header className="flex justify-between items-center text-primary p-1">
           <span>BLTMR PLC 2.4.00</span>
@@ -130,9 +133,16 @@ export default function Home() {
                      <div 
                         key={contact.id} 
                         onClick={() => { setSelectedContact(contact); setActiveTab('chat')}}
-                        className={`cursor-pointer p-2 ${selectedContact?.id === contact.id ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/20'}`}
+                        className={`cursor-pointer p-2 flex justify-between items-center ${selectedContact?.id === contact.id ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/20'}`}
                       >
-                       &gt; {contact.name.toUpperCase()}
+                       <span>&gt; {contact.name.toUpperCase()}</span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          contact.status === 'online'
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-yellow-500/20 text-yellow-400'
+                        }`}>
+                          {contact.status.toUpperCase()}
+                        </span>
                      </div>
                    ))}
                  </div>
@@ -142,7 +152,7 @@ export default function Home() {
         </div>
         
         <footer className="flex justify-between items-center text-primary p-1">
-            <span>LOW SIGNAL</span>
+            <span>{selectedContact?.status === 'online' ? 'SIGNAL: STRONG' : 'SIGNAL: WEAK'}</span>
             <span>PROPERTY OF BALTIMORE POLICE DEPARTMENT</span>
         </footer>
       </div>
