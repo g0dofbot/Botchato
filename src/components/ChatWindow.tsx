@@ -12,21 +12,14 @@ import { cn } from '@/lib/utils';
 import { SendIcon } from '@/components/icons/SendIcon';
 import { SmileIcon } from '@/components/icons/SmileIcon';
 import { UserIcon } from '@/components/icons/UserIcon';
-import { EmojiHappyIcon } from '@/components/icons/EmojiHappyIcon';
-import { EmojiSadIcon } from '@/components/icons/EmojiSadIcon';
-import { EmojiWinkIcon } from '@/components/icons/EmojiWinkIcon';
+import { retroEmojis } from '@/lib/emojiList';
+import Image from 'next/image';
+
 
 interface ChatWindowProps {
   contact: Contact | null;
   onSendMessage: (message: string) => void;
 }
-
-const emojis = [
-  { char: ':)', component: EmojiHappyIcon, name: 'Happy' },
-  { char: ':(', component: EmojiSadIcon, name: 'Sad' },
-  { char: ';)', component: EmojiWinkIcon, name: 'Wink' },
-];
-
 
 export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
@@ -50,8 +43,8 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
     }
   };
   
-  const handleEmojiSelect = (emoji: string) => {
-    setNewMessage(prev => prev + emoji + ' ');
+  const handleEmojiSelect = (emojiName: string) => {
+    setNewMessage(prev => prev + `:${emojiName}: `);
   }
 
   if (!contact) {
@@ -106,15 +99,15 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
             </PopoverTrigger>
             <PopoverContent>
               <div className="grid grid-cols-4 gap-2 text-lg font-body">
-                {emojis.map(emoji => (
+                {retroEmojis.map(emoji => (
                   <button
                     key={emoji.name}
                     type="button"
                     title={emoji.name}
-                    onClick={() => handleEmojiSelect(emoji.char)}
+                    onClick={() => handleEmojiSelect(emoji.name)}
                     className="rounded-md p-2 hover:bg-muted transition-colors"
                   >
-                    <emoji.component className="w-6 h-6" />
+                    <Image src={emoji.path} alt={emoji.name} width={24} height={24} className="w-6 h-6" />
                     <span className="sr-only">{emoji.name}</span>
                   </button>
                 ))}
