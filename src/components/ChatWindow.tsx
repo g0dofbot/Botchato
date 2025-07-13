@@ -73,18 +73,18 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                 )}
               >
                 {msg.sender === 'contact' && <UserIcon className="w-10 h-10 flex-shrink-0" />}
-                <Card
+                 <div
                   className={cn(
-                    "max-w-xs md:max-w-md lg:max-w-lg",
+                    'pixel-border max-w-xs md:max-w-md lg:max-w-lg',
                     msg.sender === 'me'
                       ? 'bg-secondary'
                       : 'bg-muted'
                   )}
                 >
-                  <CardContent className="p-3">
+                  <div className="pixel-border-content">
                     <p className="break-words">{msg.text}</p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
                 {msg.sender === 'me' && <UserIcon className="w-10 h-10 flex-shrink-0" />}
               </div>
             ))}
