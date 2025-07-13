@@ -1,6 +1,3 @@
-// In a real app, you would need to convert your PNG files to Base64 Data URIs
-// and place them here. For now, we are using placeholders.
-// You can use an online converter to change your PNGs to Data URIs.
 import type { StaticImageData } from 'next/image';
 
 export interface RetroEmoji {
@@ -8,18 +5,18 @@ export interface RetroEmoji {
   path: string | StaticImageData;
 }
 
+// Ensure your PNG files are in the `public/emojis/` directory for these paths to work.
 export const retroEmojis: RetroEmoji[] = [
-    // Example: { name: 'blushed', path: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUg....' },
-    { name: 'blushed', path: 'https://placehold.co/32x32.png' },
-    { name: 'exhausted', path: 'https://placehold.co/32x32.png' },
-    { name: 'nerd', path: 'https://placehold.co/32x32.png' },
-    { name: 'smile', path: 'https://placehold.co/32x32.png' },
-    { name: 'tease', path: 'https://placehold.co/32x32.png' },
-    { name: 'wtf', path: 'https://placehold.co/32x32.png' },
-    { name: 'sunglasses', path: 'https://placehold.co/32x32.png' },
-    { name: 'upside-smile', path: 'https://placehold.co/32x32.png' },
-    { name: 'blush', path: 'https://placehold.co/32x32.png' },
-    { name: 'kissing-heart', path: 'https://placehold.co/32x32.png' },
-    { name: 'npc', path: 'https://placehold.co/32x32.png' },
-    { name: 'smirk', path: 'https://placehold.co/32x32.png' },
+  { name: 'blushed', path: '/emojis/13749-blushed.png' },
+  { name: 'exhausted', path: '/emojis/23085-exhausted.png' },
+  { name: 'nerd', path: '/emojis/6386-nerd.png' },
+  { name: 'smile', path: '/emojis/37211-smile.png' },
+  { name: 'tease', path: '/emojis/58590-tease.png' },
+  { name: 'wtf', path: '/emojis/52091-wtf.png' },
+  { name: 'sunglasses', path: '/emojis/28714-sunglasses.png' },
+  { name: 'upside-smile', path: '/emojis/10450-upside-smile.png' },
+  { name: 'blush', path: '/emojis/37211-blush.png' },
+  { name: 'kissing-heart', path: '/emojis/kissing-heart.png' },
+  { name: 'npc', path: '/emojis/npc.png' },
+  { name: 'smirk', path: '/emojis/smirk.png' },
 ];
