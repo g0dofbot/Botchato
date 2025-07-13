@@ -1,5 +1,4 @@
 /* TODO: Move to tailwind config */
-@import "nes.css/css/nes.css";
 
 @tailwind base;
 @tailwind components;
