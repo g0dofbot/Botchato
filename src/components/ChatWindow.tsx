@@ -75,25 +75,38 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                 {msg.sender === 'contact' && <UserIcon className="w-10 h-10" />}
                 <div
                   className={cn(
-                    "relative max-w-xs md:max-w-md lg:max-w-lg p-3 border-2 border-foreground",
+                    "relative max-w-xs md:max-w-md lg:max-w-lg",
                     msg.sender === 'me'
-                      ? 'bg-secondary text-secondary-foreground rounded-lg rounded-br-none'
-                      : 'bg-muted text-muted-foreground rounded-lg rounded-bl-none'
+                      ? 'bg-secondary text-secondary-foreground'
+                      : 'bg-muted text-muted-foreground'
                   )}
                 >
-                  <p className="break-words">{msg.text}</p>
-                   <div className={cn(
-                      "absolute bottom-[-10px] w-0 h-0 border-t-[10px] border-t-transparent border-b-[0px] border-b-transparent",
-                      msg.sender === 'me'
-                        ? "right-[-2px] border-l-[10px] border-l-secondary border-r-[0px] border-r-transparent transform -scale-y-1"
-                        : "left-[-2px] border-r-[10px] border-r-muted border-l-[0px] border-l-transparent transform -scale-y-1"
-                    )}></div>
-                     <div className={cn(
-                      "absolute bottom-[-12px] w-0 h-0 border-t-[12px] border-t-transparent border-b-[0px] border-b-transparent",
-                      msg.sender === 'me'
-                        ? "right-[-6px] border-l-[12px] border-l-foreground border-r-[0px] border-r-transparent transform -scale-y-1"
-                        : "left-[-6px] border-r-[12px] border-r-foreground border-l-[0px] border-l-transparent transform -scale-y-1"
-                    )}></div>
+                  <div className="pixel-border">
+                    <div className={cn(
+                        "pixel-border-content p-3",
+                         msg.sender === 'me' ? 'bg-secondary' : 'bg-muted'
+                      )}
+                    >
+                      <p className="break-words">{msg.text}</p>
+                    </div>
+                  </div>
+                  <div
+                    className={cn(
+                      "absolute bottom-[-4px] w-4 h-4",
+                      msg.sender === 'me' ? "right-4" : "left-4"
+                    )}
+                    style={{
+                      background: 'hsl(var(--foreground))',
+                      webkitMask: 'linear-gradient(315deg, transparent 0 3px, #fff 3px 100%) 0 0/100% 100% no-repeat',
+                      mask: 'linear-gradient(315deg, transparent 0 3px, #fff 3px 100%) 0 0/100% 100% no-repeat'
+                    }}
+                  ></div>
+                   <div
+                    className={cn(
+                      "absolute bottom-0 w-3 h-2",
+                      msg.sender === 'me' ? "right-4 bg-secondary" : "left-4 bg-muted"
+                    )}
+                  ></div>
                 </div>
                 {msg.sender === 'me' && <UserIcon className="w-10 h-10" />}
               </div>
