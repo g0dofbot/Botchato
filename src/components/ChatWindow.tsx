@@ -12,14 +12,20 @@ import { cn } from '@/lib/utils';
 import { SendIcon } from '@/components/icons/SendIcon';
 import { SmileIcon } from '@/components/icons/SmileIcon';
 import { UserIcon } from '@/components/icons/UserIcon';
-import { retroEmojis } from '@/lib/emojiList';
-import Image from 'next/image';
-
+import { EmojiHappyIcon } from '@/components/icons/EmojiHappyIcon';
+import { EmojiSadIcon } from '@/components/icons/EmojiSadIcon';
+import { EmojiWinkIcon } from '@/components/icons/EmojiWinkIcon';
 
 interface ChatWindowProps {
   contact: Contact | null;
   onSendMessage: (message: string) => void;
 }
+
+const retroEmojis = [
+  { name: 'Happy', component: EmojiHappyIcon },
+  { name: 'Sad', component: EmojiSadIcon },
+  { name: 'Wink', component: EmojiWinkIcon },
+];
 
 export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
@@ -44,7 +50,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   };
   
   const handleEmojiSelect = (emojiName: string) => {
-    setNewMessage(prev => prev + `:${emojiName}: `);
+    setNewMessage(prev => prev + `:${emojiName.toLowerCase()}: `);
   }
 
   if (!contact) {
@@ -107,7 +113,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                     onClick={() => handleEmojiSelect(emoji.name)}
                     className="rounded-md p-2 hover:bg-muted transition-colors"
                   >
-                    <Image src={emoji.path} alt={emoji.name} width={24} height={24} className="w-6 h-6" />
+                    <emoji.component className="w-6 h-6" />
                     <span className="sr-only">{emoji.name}</span>
                   </button>
                 ))}
