@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -59,10 +60,13 @@ export default function LoginPage() {
             </div>
             {error && <p className="text-destructive text-center pt-2">{error}</p>}
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex-col items-stretch gap-4">
             <Button type="submit" className="w-full bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
               [ AUTHENTICATE ]
             </Button>
+            <Link href="/join" className="text-center text-sm text-muted-foreground hover:text-primary transition-colors">
+              NO ACCOUNT? ENLIST HERE
+            </Link>
           </CardFooter>
         </form>
       </Card>
