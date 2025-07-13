@@ -94,7 +94,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                     )}
                     style={{
                       background: 'hsl(var(--foreground))',
-                      webkitMask: 'linear-gradient(315deg, transparent 0 3px, #fff 3px 100%) 0 0/100% 100% no-repeat',
+                      WebkitMask: 'linear-gradient(315deg, transparent 0 3px, #fff 3px 100%) 0 0/100% 100% no-repeat',
                       mask: 'linear-gradient(315deg, transparent 0 3px, #fff 3px 100%) 0 0/100% 100% no-repeat'
                     }}
                   ></div>
