@@ -71,25 +71,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-@layer components {
-  .pixel-border {
-    background: hsl(var(--foreground));
-    padding: 4px;
-    -webkit-mask:
-        linear-gradient(45deg, transparent 0 5px, #fff 5px 100%),
-        linear-gradient(135deg, transparent 0 5px, #fff 5px 100%),
-        linear-gradient(225deg, transparent 0 5px, #fff 5px 100%),
-        linear-gradient(315deg, transparent 0 5px, #fff 5px 100%);
-    -webkit-mask-composite: destination-in;
-    mask-composite: intersect;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    mask-size: 51% 51%, 51% 51%, 51% 51%, 51% 51%;
-    mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
-  }
-
-  .pixel-border-content {
-      @apply bg-card p-3;
-  }
-}
