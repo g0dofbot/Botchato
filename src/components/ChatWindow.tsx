@@ -72,18 +72,9 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
         <div className="flex gap-2">
            <Popover>
             <PopoverTrigger asChild>
-               <div className="terminal-panel p-1 flex-grow grid grid-cols-6 gap-1">
-                 {retroEmojis.slice(0, 6).map(emoji => (
-                   <button
-                    key={emoji.name}
-                    type="button"
-                    title={emoji.name}
-                    className="p-1 hover:bg-primary/20 flex justify-center items-center"
-                  >
-                     <Image src={emoji.path} alt={emoji.name} width={24} height={24} />
-                   </button>
-                 ))}
-               </div>
+               <Button variant="outline" className="bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
+                 EMOJI
+               </Button>
             </PopoverTrigger>
             <PopoverContent className="bg-black border-primary w-auto">
               <div className="grid grid-cols-6 gap-2 text-lg font-body">
@@ -102,7 +93,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
               </div>
             </PopoverContent>
           </Popover>
-          <Button type="submit" className="bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
+          <Button type="submit" className="flex-grow bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
             SEND
           </Button>
         </div>
