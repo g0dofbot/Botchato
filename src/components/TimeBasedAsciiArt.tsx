@@ -2,9 +2,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
 const morningArt = `
- B O T R O C H A T
       __..---..__
    .-'    \\   /    '-.
  /'        \\ /        '\\
@@ -15,7 +15,6 @@ const morningArt = `
 `;
 
 const dayArt = `
- B O T R O C H A T
       .-"-.
      /|\\|/|\\
     ' |'|'| '
@@ -23,7 +22,6 @@ const dayArt = `
 `;
 
 const eveningArt = `
- B O T R O C H A T
  _..---.._
 .' \\   / '.
 / /|     |\\ \\
@@ -34,7 +32,6 @@ const eveningArt = `
 `;
 
 const nightArt = `
- B O T R O C H A T
       .--.
      /..  \\
     |:.   |
@@ -59,7 +56,7 @@ const getArtForTime = () => {
 }
 
 
-export function TimeBasedAsciiArt() {
+export function TimeBasedAsciiArt({ className }: { className?: string }) {
     const [art, setArt] = useState('');
 
     useEffect(() => {
@@ -71,7 +68,7 @@ export function TimeBasedAsciiArt() {
     }
 
     return (
-        <pre className="text-primary text-center text-xs leading-tight font-mono">
+        <pre className={cn("text-center leading-tight font-mono", className)}>
             {art}
         </pre>
     );
