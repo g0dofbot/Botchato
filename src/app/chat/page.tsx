@@ -2,16 +2,15 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { ContactInfo } from '@/components/ContactList';
 import { ChatWindow } from '@/components/ChatWindow';
 import { type Contact, type Message, contacts as mockContacts, users as allUsers, requests as mockRequests } from '@/lib/mock-data';
 import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
-import { encrypt } from '@/lib/cipher';
 import { UserPlusIcon } from '@/components/icons/UserPlusIcon';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { SettingsIcon } from '@/components/icons/SettingsIcon';
 
 export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -26,7 +25,6 @@ export default function ChatPage() {
     : [];
 
   useEffect(() => {
-    // Select the first contact by default
     if (!selectedContact && contacts.length > 0) {
       setSelectedContact(contacts[0]);
     }
@@ -49,40 +47,21 @@ export default function ChatPage() {
 
   const handleSendMessage = useCallback((messageText: string) => {
     if (!selectedContact) return;
-    
-    // This is a placeholder for real E2EE. In a real app, you'd use a library like libsignal.
-    const encryptedText = encrypt(messageText);
-
-    const newMessage: Message = {
+    console.log(`Sending message to ${selectedContact.name}: ${messageText}`);
+    // In a real app, this would call a server action.
+    // For now, let's just optimistically update the UI.
+     const newMessage: Message = {
       id: Date.now(),
-      text: `YOU: ${encryptedText}`,
+      text: `YOU: ${messageText}`, // We'll skip encryption here since the backend would handle it
       sender: 'me',
       timestamp: new Date().toISOString(),
     };
-
-    const updatedContacts = contacts.map(c =>
-      c.id === selectedContact.id
-        ? { ...c, messages: [...c.messages, newMessage] }
-        : c
-    );
-    setContacts(updatedContacts);
-    
-    // Simulate receiving a reply
-    setTimeout(() => {
-      const replyMessage: Message = {
-        id: Date.now() + 1,
-        text: `${selectedContact.name.toUpperCase()}: ${encrypt('ROGER THAT! OVER.')}`,
-        sender: 'contact',
-        timestamp: new Date().toISOString(),
-      };
-      setContacts(prevContacts => prevContacts.map(c => 
+     setContacts(prevContacts => prevContacts.map(c => 
         c.id === selectedContact.id
-          ? { ...c, messages: [...c.messages, replyMessage] }
+          ? { ...c, messages: [...c.messages, newMessage] }
           : c
       ));
-      if(audioReady) playMessageReceivedSound();
-    }, 1500);
-  }, [contacts, selectedContact, audioReady]);
+  }, [selectedContact]);
 
   useEffect(() => {
     if (selectedContact) {
@@ -100,7 +79,7 @@ export default function ChatPage() {
 
   const handleSendRequest = (userId: string) => {
     console.log(`Friend request sent to user ${userId}`);
-    // In a real app, you would handle state change here
+    // Real implementation would use a server action
   };
   
   const handleAcceptRequest = (userId: string) => {
@@ -165,8 +144,9 @@ export default function ChatPage() {
                 ))}
               </div>
               <div className="text-center mt-6">
-                  <Link href="/" className="text-primary/50 hover:text-primary text-sm">
-                       &lt; LOG OUT &gt;
+                  <Link href="/settings" className="text-primary/50 hover:text-primary text-sm flex items-center justify-center gap-2">
+                       <SettingsIcon className="w-4 h-4" />
+                       SETTINGS
                   </Link>
               </div>
             </TabsContent>
@@ -178,7 +158,6 @@ export default function ChatPage() {
                   <div className="flex gap-2">
                     <Button onClick={() => handleAcceptRequest(req.id)} size="sm" variant="ghost" className="text-xs p-1 h-auto hover:bg-primary/20">ACCEPT</Button>
                     <Button onClick={() => handleDeclineRequest(req.id)} size="sm" variant="ghost" className="text-xs p-1 h-auto hover:bg-destructive/20 hover:text-destructive">DECLINE</Button>
-
                   </div>
                 </div>
               )) : (
