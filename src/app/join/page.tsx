@@ -4,12 +4,19 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { UserPlusIcon } from '@/components/icons/UserPlusIcon';
 
 const asciiArt = `
-    _   _   _   _   _   _   _   _
-   / \\ / \\ / \\ / \\ / \\ / \\ / \\ / \\
-  ( R | E | T | R | O | M | S | G )
-   \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/
+██████╗░██╗░░░██╗██████╗░██╗██████╗░███████╗
+██╔══██╗██║░░░██║██╔══██╗██║██╔══██╗██╔════╝
+██████╔╝██║░░░██║██║░░██║██║██████╔╝█████╗░░
+██╔═══╝░██║░░░██║██║░░██║██║██╔══██╗██╔══╝░░
+██║░░░░░╚██████╔╝██████╔╝██║██║░░██║███████╗
+╚═╝░░░░░░╚═════╝░╚═════╝░╚═╝╚═╝░░╚═╝╚══════╝
 `;
 
 export default function JoinPage() {
@@ -33,55 +40,66 @@ export default function JoinPage() {
   return (
     <main className="p-4 min-h-screen flex flex-col items-center justify-center">
        <div className="text-center mb-8">
-          <pre className="text-sm leading-tight text-yellow-300">
+          <pre className="text-xs leading-tight text-primary">
 {asciiArt}
           </pre>
         </div>
-      <div className="nes-container with-title is-dark w-full max-w-md">
-        <p className="title">New Player</p>
-        <p>Create your player profile.</p>
-        <form onSubmit={handleJoin}>
-          <div className="nes-field mt-4">
-            <label htmlFor="officerId">Your Name</label>
-            <input
-              id="officerId"
-              type="text"
-              className="nes-input"
-              value={officerId}
-              onChange={(e) => setOfficerId(e.target.value)}
-            />
-          </div>
-          <div className="nes-field mt-4">
-            <label htmlFor="callsign">Username</label>
-            <input
-              id="callsign"
-              type="text"
-              className="nes-input"
-              value={callsign}
-              onChange={(e) => setCallsign(e.target.value)}
-            />
-          </div>
-          <div className="nes-field mt-4">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              className="nes-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          {error && <p className="nes-text is-error text-sm mt-4">{error}</p>}
-          <div className='flex flex-col items-center gap-4 mt-6'>
-            <button type="submit" className="nes-btn is-success w-full">
-              Create Account
-            </button>
-            <Link href="/" className="nes-text">
-              Already a player? Sign In
-            </Link>
-          </div>
-        </form>
-      </div>
+      <Card className="w-full max-w-md bg-background/50 border-primary/30">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-primary">
+            <UserPlusIcon className="w-6 h-6" />
+            ENLISTMENT
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleJoin}>
+            <div className="space-y-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label htmlFor="officerId">OFFICER ID</Label>
+                <Input
+                  id="officerId"
+                  type="text"
+                  value={officerId}
+                  onChange={(e) => setOfficerId(e.target.value)}
+                  className="bg-input border-primary/30 text-primary"
+                  placeholder="e.g. 7482"
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label htmlFor="callsign">CALLSIGN</Label>
+                <Input
+                  id="callsign"
+                  type="text"
+                  value={callsign}
+                  onChange={(e) => setCallsign(e.target.value)}
+                  className="bg-input border-primary/30 text-primary"
+                  placeholder="e.g. DELTA-7"
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label htmlFor="password">PASSWORD</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="bg-input border-primary/30 text-primary"
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+            {error && <p className="text-destructive text-sm mt-4">{error}</p>}
+            <div className='flex flex-col items-center gap-4 mt-6'>
+              <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/80">
+                SUBMIT APPLICATION
+              </Button>
+              <Link href="/" className="text-primary/50 hover:text-primary text-sm">
+                &lt; RETURN TO LOGIN &gt;
+              </Link>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     </main>
   );
 }

@@ -1,70 +1,89 @@
-/* TODO: Move to tailwind config */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 240 70% 15%; /* #191970 - Dark Navy Blue */
-    --foreground: 0 0% 80%; /* #D3D3D3 - Light Grey */
+  .theme-green {
+    --background: 240 70% 4%; /* Darker Navy */
+    --foreground: 48, 92%, 52%; /* Terminal Green */
 
-    --card: 240 70% 15%;
-    --card-foreground: 0 0% 80%;
+    --card: 240 70% 6%;
+    --card-foreground: 120 73% 75%;
 
-    --popover: 240 70% 10%;
-    --popover-foreground: 0 0% 80%;
+    --popover: 240 70% 4%;
+    --popover-foreground: 120 73% 75%;
 
-    --primary: 60 100% 75%; /* #FFFF80 - Pale Yellow */
-    --primary-foreground: 240 70% 15%; /* Dark Navy Blue for text on yellow */
+    --primary: 120 73% 75%; /* Bright Green */
+    --primary-foreground: 240 70% 10%; 
 
-    --secondary: 240 30% 25%;
-    --secondary-foreground: 0 0% 80%;
+    --secondary: 240 30% 15%;
+    --secondary-foreground: 120 73% 75%;
 
-    --muted: 240 30% 25%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 240 30% 15%;
+    --muted-foreground: 120 73% 65%;
 
-    --accent: 240 30% 35%;
-    --accent-foreground: 60 100% 75%;
+    --accent: 240 30% 25%;
+    --accent-foreground: 120 73% 85%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 30% 35%;
-    --input: 240 30% 25%;
-    --ring: 60 100% 75%;
+    --border: 120 73% 75%;
+    --input: 240 30% 15%;
+    --ring: 120 73% 75%;
+    
+    --radius: 0rem;
+  }
+  
+  .theme-sepia {
+    --background: 30 25% 10%; /* Dark Brown */
+    --foreground: 35 35% 70%; /* Sepia Light Text */
+  
+    --card: 30 25% 12%;
+    --card-foreground: 35 35% 70%;
+  
+    --popover: 30 25% 8%;
+    --popover-foreground: 35 35% 70%;
+  
+    --primary: 35 35% 70%; /* Sepia Light Text as primary */
+    --primary-foreground: 30 25% 10%; /* Dark Brown for text on primary */
+  
+    --secondary: 30 15% 25%;
+    --secondary-foreground: 35 35% 70%;
+  
+    --muted: 30 15% 25%;
+    --muted-foreground: 35 35% 60%;
+  
+    --accent: 30 15% 35%;
+    --accent-foreground: 35 35% 80%;
+  
+    --destructive: 0 50% 40%;
+    --destructive-foreground: 0 0% 98%;
+  
+    --border: 35 35% 70%;
+    --input: 30 15% 25%;
+    --ring: 35 35% 70%;
     
     --radius: 0rem;
   }
 }
 
+
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border/20;
   }
   body {
-    @apply bg-background text-foreground font-body;
-    background-color: #191970; /* Dark Navy Blue */
-    color: #D3D3D3; /* Light Grey */
+    @apply bg-background text-primary font-mono;
+    background-color: hsl(var(--background));
+    color: hsl(var(--primary));
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+  main, div, aside, section, form, input, textarea, button, a {
+    transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
   }
   ::selection {
     @apply bg-primary text-primary-foreground;
   }
-
-  h1, h2, h3, h4, h5, h6, .nes-btn, .nes-input, .nes-textarea, .nes-select, .nes-progress, .nes-badge, .nes-container, .nes-table, a, .nes-radio, .nes-checkbox {
-    font-family: 'Press Start 2P', cursive !important;
-  }
-}
-
-.is-dark.nes-container.with-title>.title {
-  color: #fff;
-  background-color: #191970;
-}
-
-.nes-btn {
-  color: #212529; /* Default nes.css text color */
-}
-
-.nes-btn.is-primary {
-  color: #191970;
 }

@@ -8,6 +8,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import Image from 'next/image';
 import { MessageRenderer } from './MessageRenderer';
 import { retroEmojis } from '@/lib/emojiList';
+import { SmileIcon } from './icons/SmileIcon';
+import { SendIcon } from './icons/SendIcon';
 
 interface ChatWindowProps {
   contact: Contact | null;
@@ -49,45 +51,47 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
 
   if (!contact) {
     return (
-      <div className="nes-container is-dark is-centered h-full">
-        <p>Select a contact to start chatting!</p>
+      <div className="border border-primary/30 h-full flex items-center justify-center bg-background/20">
+        <p className="text-primary">Select a contact to start messaging.</p>
       </div>
     );
   }
 
   return (
-    <div className="nes-container with-title is-dark h-full flex flex-col">
-      <p className="title">Chat with {contact.name}</p>
-      <div className="flex-grow p-4 overflow-y-auto bg-gray-800/20" ref={scrollAreaRef}>
-        <section className="message-list space-y-6">
-            {contact.messages.map((msg) => (
-               <div key={msg.id} className={`message ${msg.sender === 'me' ? '-right' : '-left'}`}>
-                  <div className={`nes-balloon from-${msg.sender === 'me' ? 'right' : 'left'} is-dark`}>
-                    <p className="whitespace-pre-wrap text-sm">
-                      <MessageRenderer text={msg.text} />
-                    </p>
-                  </div>
-               </div>
-            ))}
-        </section>
+    <div className="border border-primary/30 h-full flex flex-col bg-background/20">
+      <div className="p-4 border-b-2 border-primary/30">
+        <h2 className="text-xl text-primary">Chat with {contact.name}</h2>
       </div>
-      <div className="p-4 border-t-4 border-gray-700">
-        <form onSubmit={handleSendMessage} className="flex items-center gap-2 w-full">
-          <Popover>
+      <div className="flex-grow p-4 overflow-y-auto" ref={scrollAreaRef}>
+        <div className="space-y-4">
+            {contact.messages.map((msg, index) => (
+                <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`p-3 max-w-xs md:max-w-md ${msg.sender === 'me' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'}`}>
+                      <p className="whitespace-pre-wrap text-sm">
+                        <MessageRenderer text={msg.text} />
+                      </p>
+                    </div>
+                </div>
+            ))}
+        </div>
+      </div>
+      <div className="p-4 border-t-2 border-primary/30">
+        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+           <Popover>
             <PopoverTrigger asChild>
-               <button type="button" className='nes-btn'>
-                 <i className="nes-icon smiley is-small"></i>
+               <button type="button" className='p-2 hover:bg-primary/20 text-primary'>
+                 <SmileIcon />
                </button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto nes-container is-dark">
-              <div className="grid grid-cols-6 gap-2">
+            <PopoverContent className="w-auto border-primary/30 bg-popover">
+              <div className="grid grid-cols-6 gap-1">
                 {retroEmojis.map(emoji => (
                   <button
                     key={emoji.name}
                     type="button"
                     title={emoji.name}
                     onClick={() => handleEmojiSelect(emoji.name)}
-                    className="p-2 hover:bg-gray-700 rounded-md transition-colors"
+                    className="p-2 hover:bg-primary/20 rounded-sm"
                   >
                     <Image src={emoji.path} alt={emoji.name} width={24} height={24} />
                     <span className="sr-only">{emoji.name}</span>
@@ -98,16 +102,16 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
           </Popover>
           <textarea
             ref={textAreaRef}
-            placeholder={`Message ${contact.name}...`}
+            placeholder={`MESSAGE ${contact.name.toUpperCase()}...`}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             autoComplete="off"
-            className="nes-textarea is-dark flex-grow"
+            className="w-full bg-input text-primary p-2 flex-grow border border-primary/30 focus:ring-1 focus:ring-ring focus:outline-none"
             rows={1}
           />
-          <button type="submit" className="nes-btn is-primary" disabled={!newMessage.trim()}>
-            Send
+          <button type="submit" className="p-2 bg-primary text-primary-foreground hover:bg-primary/80 disabled:opacity-50" disabled={!newMessage.trim()}>
+            <SendIcon />
           </button>
         </form>
       </div>

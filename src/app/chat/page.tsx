@@ -14,6 +14,7 @@ export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [audioReady, setAudioReady] = useState(false);
+  const [theme, setTheme] = useState('theme-green');
 
   useEffect(() => {
     // Select the first contact by default
@@ -22,10 +23,23 @@ export default function ChatPage() {
     }
   }, [contacts, selectedContact]);
 
+  useEffect(() => {
+    if (selectedContact) {
+      setTheme(selectedContact.status === 'online' ? 'theme-green' : 'theme-sepia');
+    }
+  }, [selectedContact]);
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.body.className = '';
+      document.body.classList.add(theme);
+    }
+  }, [theme]);
+
   const handleSendMessage = useCallback((messageText: string) => {
     if (!selectedContact) return;
     
-    // In a real E2EE app, you'd use a library like libsignal here.
+    // This is a placeholder for real E2EE. In a real app, you'd use a library like libsignal.
     const encryptedText = encrypt(messageText);
 
     const newMessage: Message = {
@@ -76,14 +90,14 @@ export default function ChatPage() {
   if (!audioReady) {
     return (
       <div
-        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4"
+        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4 bg-background text-primary"
         onClick={handleInitAudio}
       >
-        <div className="nes-container is-dark with-title max-w-md">
-            <p className="title">Audio</p>
-            <p className='mb-4'>Click to enable sound effects.</p>
-            <button className="nes-btn is-primary">
-              Enable Audio
+        <div className="border p-8 border-primary/50 bg-background/50 max-w-md">
+            <h2 className="text-xl mb-4 text-primary">AUDIO SYSTEM OFFLINE</h2>
+            <p className='mb-4'>Click to initialize audio hardware.</p>
+            <button className="bg-primary text-primary-foreground px-4 py-2 hover:bg-primary/80">
+              INITIALIZE
             </button>
         </div>
       </div>
@@ -92,46 +106,42 @@ export default function ChatPage() {
   
   return (
     <main className="p-2 md:p-4 min-h-screen">
-       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 max-w-7xl mx-auto">
-         {/* Sidebar */}
-         <aside className="col-span-12 md:col-span-3">
-            <div className="nes-container with-title is-dark h-full">
-              <p className='title flex items-center gap-2'>
-                <i className="nes-icon is-small star"></i>
-                <span>Contacts</span>
-                <i className="nes-icon is-small star"></i>
-              </p>
-              <div className="space-y-2">
-                {contacts.map(contact => (
-                  <div 
-                     key={contact.id} 
-                     onClick={() => setSelectedContact(contact)}
-                     className={`cursor-pointer p-3 flex justify-between items-center rounded-lg ${selectedContact?.id === contact.id ? 'bg-blue-800' : 'hover:bg-blue-900'}`}
-                   >
-                    <div className='flex items-center gap-2'>
-                       <i className={`nes-icon ${contact.status === 'online' ? 'heart' : 'close'} is-small`}></i>
-                       <span className={`nes-text ${selectedContact?.id === contact.id ? 'is-primary' : ''}`}>{contact.name}</span>
-                    </div>
-                     <span className={`nes-badge ${contact.status === 'online' ? '' : 'is-dark'}`}>
-                       <span className={contact.status === 'online' ? 'is-success' : 'is-error'}>{contact.status.toUpperCase()}</span>
-                     </span>
-                  </div>
-                ))}
-              </div>
-              <div className="text-center mt-6">
-                 <Link href="/" className="nes-btn">
-                      Log Out
-                 </Link>
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 max-w-7xl mx-auto">
+        {/* Sidebar */}
+        <aside className="col-span-12 md:col-span-3">
+          <div className="border border-primary/30 p-4 h-full bg-background/20">
+            <h2 className="text-lg font-bold mb-4 text-primary flex items-center gap-2">
+              <UsersIcon className="w-5 h-5" />
+              CONTACTS
+            </h2>
+            <div className="space-y-2">
+              {contacts.map(contact => (
+                <div 
+                  key={contact.id} 
+                  onClick={() => setSelectedContact(contact)}
+                  className={`cursor-pointer p-2 flex justify-between items-center ${selectedContact?.id === contact.id ? 'bg-primary/20' : 'hover:bg-primary/10'}`}
+                >
+                  <span className={`${selectedContact?.id === contact.id ? 'text-accent-foreground' : 'text-primary'}`}>{contact.name}</span>
+                  <span className={`text-xs ${contact.status === 'online' ? 'text-primary' : 'text-primary/50'}`}>
+                    {contact.status.toUpperCase()}
+                  </span>
+                </div>
+              ))}
             </div>
-         </aside>
+            <div className="text-center mt-6">
+                <Link href="/" className="text-primary/50 hover:text-primary text-sm">
+                     &lt; LOG OUT &gt;
+                </Link>
+            </div>
+          </div>
+        </aside>
 
         {/* Main Chat Area */}
         <div className="col-span-12 md:col-span-6">
-            <ChatWindow
-              contact={selectedContact}
-              onSendMessage={handleSendMessage}
-            />
+          <ChatWindow
+            contact={selectedContact}
+            onSendMessage={handleSendMessage}
+          />
         </div>
 
         {/* Contact Info */}

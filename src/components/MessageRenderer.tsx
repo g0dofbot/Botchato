@@ -34,9 +34,10 @@ export function MessageRenderer({ text }: MessageRendererProps) {
               key={index}
               src={emojiPath}
               alt={`:${part}:`}
-              width={24}
-              height={24}
+              width={16}
+              height={16}
               className="inline-block mx-1 align-text-bottom"
+              style={{ imageRendering: 'pixelated' }}
             />
           );
         }
