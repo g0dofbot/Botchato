@@ -63,7 +63,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-4 overflow-hidden">
         <ScrollArea className="flex-grow p-4 rounded-md bg-background" ref={scrollAreaRef}>
-          <div className="space-y-6">
+          <div className="space-y-4">
             {contact.messages.map((msg) => (
               <div
                 key={msg.id}
@@ -72,40 +72,20 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                   msg.sender === 'me' ? 'justify-end' : 'justify-start'
                 )}
               >
-                {msg.sender === 'contact' && <UserIcon className="w-10 h-10" />}
-                <div
+                {msg.sender === 'contact' && <UserIcon className="w-10 h-10 flex-shrink-0" />}
+                <Card
                   className={cn(
-                    "relative max-w-xs md:max-w-md lg:max-w-lg",
+                    "max-w-xs md:max-w-md lg:max-w-lg",
+                    msg.sender === 'me'
+                      ? 'bg-secondary'
+                      : 'bg-muted'
                   )}
                 >
-                  <div className="pixel-border">
-                    <div className={cn(
-                        "pixel-border-content p-3",
-                         msg.sender === 'me' ? 'bg-secondary' : 'bg-muted'
-                      )}
-                    >
-                      <p className="break-words">{msg.text}</p>
-                    </div>
-                  </div>
-                  <div
-                    className={cn(
-                      "absolute bottom-[-4px] w-4 h-4",
-                      msg.sender === 'me' ? "right-4" : "left-4"
-                    )}
-                    style={{
-                      background: 'hsl(var(--foreground))',
-                      WebkitMask: 'linear-gradient(315deg, transparent 0 3px, #fff 3px 100%) 0 0/100% 100% no-repeat',
-                      mask: 'linear-gradient(315deg, transparent 0 3px, #fff 3px 100%) 0 0/100% 100% no-repeat'
-                    }}
-                  ></div>
-                   <div
-                    className={cn(
-                      "absolute bottom-0 w-3 h-2",
-                      msg.sender === 'me' ? "right-4 bg-secondary" : "left-4 bg-muted"
-                    )}
-                  ></div>
-                </div>
-                {msg.sender === 'me' && <UserIcon className="w-10 h-10" />}
+                  <CardContent className="p-3">
+                    <p className="break-words">{msg.text}</p>
+                  </CardContent>
+                </Card>
+                {msg.sender === 'me' && <UserIcon className="w-10 h-10 flex-shrink-0" />}
               </div>
             ))}
           </div>
