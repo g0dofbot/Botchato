@@ -7,11 +7,9 @@ import { ChatWindow } from '@/components/ChatWindow';
 import { type Contact, type Message, contacts as mockContacts, users as allUsers, requests as mockRequests } from '@/lib/mock-data';
 import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
 import { encrypt } from '@/lib/cipher';
-import { UsersIcon } from '@/components/icons/UsersIcon';
 import { UserPlusIcon } from '@/components/icons/UserPlusIcon';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { UserIcon } from '@/components/icons/UserIcon';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -111,7 +109,7 @@ export default function ChatPage() {
      const newContact = allUsers.find(u => u.id === userId);
      if (newContact) {
         // @ts-ignore
-        setContacts(prev => [...prev, newContact]);
+        setContacts(prev => [...prev, { ...newContact, messages: [], status: 'offline', avatar: 'https://placehold.co/96x96.png', associates: 'Unknown', bio: 'Newly added contact.' }]);
      }
   };
 
@@ -143,7 +141,7 @@ export default function ChatPage() {
       <div className="grid grid-cols-1 md:grid-cols-12 h-screen">
 
         {/* Sidebar with Tabs */}
-        <aside className="col-span-12 md:col-span-4 lg:col-span-3">
+        <aside className="col-span-12 md:col-span-4 lg:col-span-3 border-r border-primary/30">
           <Tabs defaultValue="contacts" className="h-full flex flex-col">
             <TabsList className="w-full justify-start rounded-none">
               <TabsTrigger value="contacts" className="text-base">CONTACTS</TabsTrigger>
@@ -152,7 +150,7 @@ export default function ChatPage() {
               <TabsTrigger value="file" className="text-base">FILE</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="contacts" className="flex-grow overflow-y-auto border-r border-primary/30 p-4 bg-background/20">
+            <TabsContent value="contacts" className="flex-grow overflow-y-auto p-4 bg-background/20">
               <div className="space-y-2">
                 {contacts.map(contact => (
                   <div 
@@ -174,7 +172,7 @@ export default function ChatPage() {
               </div>
             </TabsContent>
 
-             <TabsContent value="requests" className="flex-grow overflow-y-auto border-r border-primary/30 p-4 bg-background/20 space-y-3">
+             <TabsContent value="requests" className="flex-grow overflow-y-auto p-4 bg-background/20 space-y-3">
               {requests.length > 0 ? requests.map(req => (
                 <div key={req.id} className="p-2 border border-primary/20">
                   <p className="text-primary mb-2">{req.name} wants to connect.</p>
@@ -188,7 +186,7 @@ export default function ChatPage() {
               )}
             </TabsContent>
 
-             <TabsContent value="find" className="flex-grow overflow-y-auto border-r border-primary/30 p-4 bg-background/20">
+             <TabsContent value="find" className="flex-grow overflow-y-auto p-4 bg-background/20">
                 <div className="space-y-4">
                     <Input 
                         type="text" 
@@ -216,7 +214,7 @@ export default function ChatPage() {
                 </div>
             </TabsContent>
 
-            <TabsContent value="file" className="flex-grow overflow-y-auto border-r border-primary/30 bg-background/20">
+            <TabsContent value="file" className="flex-grow overflow-y-auto bg-background/20">
               <ContactInfo contact={selectedContact} />
             </TabsContent>
           </Tabs>
