@@ -17,9 +17,10 @@ import { Button } from './ui/button';
 interface ChatWindowProps {
   contact: Contact | null;
   onSendMessage: (message: string) => void;
+  isAiTyping?: boolean;
 }
 
-export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
+export function ChatWindow({ contact, onSendMessage, isAiTyping = false }: ChatWindowProps) {
   const [newMessage, setNewMessage] = useState('');
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -29,7 +30,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
     if (scrollAreaRef.current) {
         scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
-  }, [contact?.messages]);
+  }, [contact?.messages, isAiTyping]);
 
    useEffect(() => {
     // Auto-resize textarea
@@ -90,6 +91,15 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                       </div>
                   </div>
               ))}
+              {isAiTyping && (
+                <div className="flex justify-start">
+                   <div className="p-3 max-w-xs md:max-w-md bg-secondary text-secondary-foreground">
+                        <p className="whitespace-pre-wrap text-sm break-words animate-pulse">
+                         Oracle is typing...
+                        </p>
+                      </div>
+                </div>
+              )}
           </div>
         </div>
         <div className="p-4 border-t-2 border-primary/30">
@@ -127,7 +137,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
               className="w-full bg-input text-primary p-2 flex-grow border border-primary/30 focus:ring-1 focus:ring-ring focus:outline-none resize-none overflow-y-hidden"
               rows={1}
             />
-            <button type="submit" className="p-2 bg-primary text-primary-foreground hover:bg-primary/80 disabled:opacity-50 mt-1.5" disabled={!newMessage.trim()}>
+            <button type="submit" className="p-2 bg-primary text-primary-foreground hover:bg-primary/80 disabled:opacity-50 mt-1.5" disabled={!newMessage.trim() || isAiTyping}>
               <SendIcon />
             </button>
           </form>

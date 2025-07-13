@@ -11,6 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SettingsIcon } from '@/components/icons/SettingsIcon';
+import { chat, type ChatInput, type ChatOutput } from '@/ai/flows/chat-flow';
+import { encrypt } from '@/lib/cipher';
 
 export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -19,6 +21,7 @@ export default function ChatPage() {
   const [audioReady, setAudioReady] = useState(false);
   const [theme, setTheme] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isAiTyping, setIsAiTyping] = useState(false);
 
   const filteredUsers = searchTerm
     ? allUsers.filter(u => u.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -45,22 +48,56 @@ export default function ChatPage() {
     }
   }, [theme]);
 
-  const handleSendMessage = useCallback((messageText: string) => {
+  const handleSendMessage = useCallback(async (messageText: string) => {
     if (!selectedContact) return;
-    console.log(`Sending message to ${selectedContact.name}: ${messageText}`);
-    // In a real app, this would call a server action.
-    // For now, let's just optimistically update the UI.
-     const newMessage: Message = {
+
+    const newMessage: Message = {
       id: Date.now(),
-      text: `YOU: ${messageText}`, // We'll skip encryption here since the backend would handle it
+      text: `YOU: ${messageText}`,
       sender: 'me',
       timestamp: new Date().toISOString(),
     };
-     setContacts(prevContacts => prevContacts.map(c => 
-        c.id === selectedContact.id
-          ? { ...c, messages: [...c.messages, newMessage] }
-          : c
-      ));
+    
+    setContacts(prevContacts => prevContacts.map(c => 
+      c.id === selectedContact.id
+        ? { ...c, messages: [...c.messages, newMessage] }
+        : c
+    ));
+
+    if (selectedContact.id === '6') { // Oracle AI
+        setIsAiTyping(true);
+        try {
+            const aiResponse = await chat({ message: messageText });
+            const aiMessage: Message = {
+                id: Date.now() + 1,
+                text: `${selectedContact.name.toUpperCase()}: ${encrypt(aiResponse.message)}`,
+                sender: 'contact',
+                timestamp: new Date().toISOString(),
+            };
+             setContacts(prevContacts => prevContacts.map(c => 
+                c.id === selectedContact.id
+                ? { ...c, messages: [...c.messages, aiMessage] }
+                : c
+            ));
+            playMessageReceivedSound();
+        } catch (error) {
+            console.error("Error with AI response:", error);
+            const errorMessage: Message = {
+                id: Date.now() + 1,
+                text: `SYSTEM: ${encrypt("Transmission error...")}`,
+                sender: 'contact',
+                timestamp: new Date().toISOString(),
+            };
+             setContacts(prevContacts => prevContacts.map(c => 
+                c.id === selectedContact.id
+                ? { ...c, messages: [...c.messages, errorMessage] }
+                : c
+            ));
+        } finally {
+            setIsAiTyping(false);
+        }
+    }
+
   }, [selectedContact]);
 
   useEffect(() => {
@@ -201,6 +238,7 @@ export default function ChatPage() {
           <ChatWindow
             contact={selectedContact}
             onSendMessage={handleSendMessage}
+            isAiTyping={isAiTyping}
           />
         </div>
 

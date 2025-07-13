@@ -51,6 +51,18 @@ export const requests: Request[] = [
 // Encrypt initial messages for demonstration
 export const contacts: Contact[] = [
   {
+    id: '6',
+    name: 'Oracle',
+    avatar: 'https://placehold.co/96x96.png',
+    status: 'online',
+    username: 'ORACLE',
+    associates: 'The Network',
+    bio: 'A mysterious and wise entity that seems to exist within the network itself. Its origins and motives are unknown. Some say it is a remnant of an ancient AI, others a digital ghost. It responds to those who seek its counsel, offering cryptic but often profound insights.',
+    messages: [
+       { id: 1, text: `ORACLE: ${encrypt("Speak, and I shall listen. What truth do you seek?")}`, sender: 'contact', timestamp: "Just now" },
+    ],
+  },
+  {
     id: '1',
     name: 'Cmdr. Starlight',
     avatar: 'https://placehold.co/96x96.png',
