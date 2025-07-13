@@ -90,15 +90,15 @@ export default function ChatPage() {
   if (!audioReady) {
     return (
       <div
-        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4 bg-background text-primary"
+        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4 bg-black text-primary"
         onClick={handleInitAudio}
       >
-        <div className="border p-8 border-primary/50 bg-background/50 max-w-md">
-            <h2 className="text-xl mb-4 text-primary">AUDIO SYSTEM OFFLINE</h2>
-            <p className='mb-4'>Click to initialize audio hardware.</p>
-            <button className="bg-primary text-primary-foreground px-4 py-2 hover:bg-primary/80">
-              INITIALIZE
-            </button>
+        <div className="border p-8 border-primary" style={{boxShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary)) inset'}}>
+            <h2 className="text-2xl md:text-3xl mb-4 tracking-widest">INITIALIZE AUDIO TRANSMISSION?</h2>
+            <p className='mb-6 text-sm'>[CLICK TO ENABLE AUDIO FEEDBACK]</p>
+            <div className="inline-block border border-primary bg-black px-4 py-2 text-lg">
+              [ Y / N ]
+            </div>
         </div>
       </div>
     );
