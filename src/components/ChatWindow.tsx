@@ -11,6 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils';
 import { SendIcon } from '@/components/icons/SendIcon';
 import { SmileIcon } from '@/components/icons/SmileIcon';
+import { UserIcon } from '@/components/icons/UserIcon';
 
 interface ChatWindowProps {
   contact: Contact | null;
@@ -61,21 +62,43 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
         <CardTitle className="font-headline">{contact.name}</CardTitle>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-4 overflow-hidden">
-        <ScrollArea className="flex-grow  p-4 rounded-md bg-background" ref={scrollAreaRef}>
-            <div className="space-y-4">
+        <ScrollArea className="flex-grow p-4 rounded-md bg-background" ref={scrollAreaRef}>
+          <div className="space-y-6">
             {contact.messages.map((msg) => (
-                <div key={msg.id} className={cn("flex", msg.sender === 'me' ? 'justify-end' : 'justify-start')}>
-                    <div className={cn(
-                        "max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-lg",
-                        msg.sender === 'me' 
-                        ? 'bg-secondary text-secondary-foreground' 
-                        : 'bg-muted text-muted-foreground'
-                    )}>
-                        <p className="break-words">{msg.text}</p>
-                    </div>
+              <div
+                key={msg.id}
+                className={cn(
+                  "flex items-end gap-2",
+                  msg.sender === 'me' ? 'justify-end' : 'justify-start'
+                )}
+              >
+                {msg.sender === 'contact' && <UserIcon className="w-10 h-10" />}
+                <div
+                  className={cn(
+                    "relative max-w-xs md:max-w-md lg:max-w-lg p-3 border-2 border-foreground",
+                    msg.sender === 'me'
+                      ? 'bg-secondary text-secondary-foreground rounded-lg rounded-br-none'
+                      : 'bg-muted text-muted-foreground rounded-lg rounded-bl-none'
+                  )}
+                >
+                  <p className="break-words">{msg.text}</p>
+                   <div className={cn(
+                      "absolute bottom-[-10px] w-0 h-0 border-t-[10px] border-t-transparent border-b-[0px] border-b-transparent",
+                      msg.sender === 'me'
+                        ? "right-[-2px] border-l-[10px] border-l-secondary border-r-[0px] border-r-transparent transform -scale-y-1"
+                        : "left-[-2px] border-r-[10px] border-r-muted border-l-[0px] border-l-transparent transform -scale-y-1"
+                    )}></div>
+                     <div className={cn(
+                      "absolute bottom-[-12px] w-0 h-0 border-t-[12px] border-t-transparent border-b-[0px] border-b-transparent",
+                      msg.sender === 'me'
+                        ? "right-[-6px] border-l-[12px] border-l-foreground border-r-[0px] border-r-transparent transform -scale-y-1"
+                        : "left-[-6px] border-r-[12px] border-r-foreground border-l-[0px] border-l-transparent transform -scale-y-1"
+                    )}></div>
                 </div>
+                {msg.sender === 'me' && <UserIcon className="w-10 h-10" />}
+              </div>
             ))}
-            </div>
+          </div>
         </ScrollArea>
         <form onSubmit={handleSendMessage} className="flex items-center gap-2">
           <Popover>
