@@ -14,10 +14,9 @@ export interface Contact {
   avatar: string; 
   status: 'online' | 'offline';
   messages: Message[];
-  // New fields for the info panel
-  officerId: string;
-  securityCode: string;
-  weapon: string;
+  // Updated fields for the info panel
+  username: string;
+  favoriteFood: string;
   bio: string;
 }
 
@@ -28,10 +27,9 @@ export const contacts: Contact[] = [
     name: 'Player 2',
     avatar: 'https://placehold.co/96x96.png',
     status: 'online',
-    officerId: 'P2-ARCADE',
-    securityCode: '48532695-CF',
-    weapon: 'JOYSTICK',
-    bio: 'SUBJECT IS A LONG-TIME ASSOCIATE. KNOWN SKILL IN ARCADE-STYLE COMBAT SIMULATIONS. FREQUENTLY USES عبارات مثل "1-UP" AND "GAME OVER". CONSIDERED A RELIABLE ASSET.',
+    username: 'P2-ARCADE',
+    favoriteFood: 'Pizza',
+    bio: 'Loves playing arcade games and is always ready for the next challenge. Frequently uses phrases like "1-UP" and "Game Over". Considered a reliable friend.',
     messages: [
       { id: 1, text: `PLAYER 2: ${encrypt("Hey, are you ready for the next level?")}`, sender: 'contact', timestamp: "10:00 AM" },
       { id: 2, text: `YOU: ${encrypt("You bet! Just grabbing a 1-UP.")}`, sender: 'me', timestamp: "10:01 AM" },
@@ -43,13 +41,12 @@ export const contacts: Contact[] = [
     name: 'Princess Peach',
     avatar: 'https://placehold.co/96x96.png',
     status: 'online',
-    officerId: 'MUSH-KING-01',
-    securityCode: 'PEACH-1985-ND',
-    weapon: 'PARASOL',
-    bio: 'HIGH-VALUE PRINCIPAL. RECURRING VICTIM OF KIDNAPPING BY REGIONAL WARLORD "BOWSER". POSSESSES UNVERIFIED FLOATING ABILITIES. ALL-AROUND PERSONABLE.',
+    username: 'RoyalPeach',
+    favoriteFood: 'Cake',
+    bio: 'Ruler of the Mushroom Kingdom. Enjoys baking, gardening, and going on adventures. Always gracious and kind to her friends.',
     messages: [
-      { id: 1, text: `PRINCESS PEACH: ${encrypt("Thanks for saving me again!")}`, sender: 'contact', timestamp: "11:30 AM" },
-      { id: 2, text: `YOU: ${encrypt("No problem, your highness. Just doing my job!")}`, sender: 'me', timestamp: "11:31 AM" },
+      { id: 1, text: `PRINCESS PEACH: ${encrypt("Thank you for coming to my party!")}`, sender: 'contact', timestamp: "11:30 AM" },
+      { id: 2, text: `YOU: ${encrypt("Of course! I wouldn't miss it for the world.")}`, sender: 'me', timestamp: "11:31 AM" },
     ],
   },
   {
@@ -57,15 +54,14 @@ export const contacts: Contact[] = [
     name: 'Toad',
     avatar: 'https://placehold.co/96x96.png',
     status: 'offline',
-    officerId: 'CIV-TOAD-03',
-    securityCode: '84591238-MK',
-    weapon: 'MUSHROOM',
-    bio: 'CIVILIAN ASSET. ROYAL ATTENDANT TO PRINCESS PEACH. KNOWN FOR HIGH-PITCHED VOCALIZATIONS AND PROVIDING MISLEADING INTELLIGENCE. RELIABILITY IS QUESTIONABLE BUT INTENTIONS SEEM BENIGN.',
+    username: 'ToadExplorer',
+    favoriteFood: 'Mushroom Soup',
+    bio: 'A loyal attendant to the princess and a friendly citizen of the Mushroom Kingdom. He is brave but can be a bit of a worrier. Always trying his best!',
     messages: [
-      { id: 1, text: `TOAD: ${encrypt("The princess is in another castle!")}`, sender: 'contact', timestamp: "Yesterday" },
-      { id: 2, text: `YOU: ${encrypt("AGAIN?! Which one this time?")}`, sender: 'me', timestamp: "Yesterday" },
-      { id: 3, text: `TOAD: ${encrypt("Umm... I think the one past the spooky forest.")}`, sender: 'contact', timestamp: "Yesterday" },
-      { id: 4, text: `YOU: ${encrypt("On my way.")}`, sender: 'me', timestamp: "Yesterday" },
+      { id: 1, text: `TOAD: ${encrypt("I found a secret treasure map!")}`, sender: 'contact', timestamp: "Yesterday" },
+      { id: 2, text: `YOU: ${encrypt("Wow! Where does it lead?")}`, sender: 'me', timestamp: "Yesterday" },
+      { id: 3, text: `TOAD: ${encrypt("Umm... I think to a spooky forest.")}`, sender: 'contact', timestamp: "Yesterday" },
+      { id: 4, text: `YOU: ${encrypt("Let's go check it out!")}`, sender: 'me', timestamp: "Yesterday" },
     ],
   },
   {
@@ -73,12 +69,11 @@ export const contacts: Contact[] = [
     name: 'Bowser',
     avatar: 'https://placehold.co/96x96.png',
     status: 'offline',
-    officerId: 'HOSTILE-01',
-    securityCode: 'KOOPA-KING-XX',
-    weapon: 'FIRE BREATH',
-    bio: 'PRIMARY ANTAGONIST. LEADER OF THE KOOPA TROOP. REPEATEDLY ATTEMPTS TO ANNEX THE MUSHROOM KINGDOM. MOTIVATIONS APPEAR TO BE TERRITORIAL AND POSSIBLY ROMANTIC. EXTREME CAUTION ADVISED.',
+    username: 'KingKoopa',
+    favoriteFood: 'Steak',
+    bio: 'Leader of the Koopa Troop. He has a tough exterior but a soft spot for his kids. Likes rock music and planning big, elaborate schemes.',
     messages: [
-        {id: 1, text: `BOWSER: ${encrypt("You'll never defeat me, plumber!")}`, sender: 'contact', timestamp: "Last week"},
+        {id: 1, text: `BOWSER: ${encrypt("You'll never beat me at go-karting!")}`, sender: 'contact', timestamp: "Last week"},
         {id: 2, text: `YOU: ${encrypt("We'll see about that, shell-for-brains.")}`, sender: 'me', timestamp: "Last week"},
     ]
   }

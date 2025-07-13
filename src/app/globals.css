@@ -2,96 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'VT323', monospace;
-  background-color: hsl(var(--background));
-  background-image:
-    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  background-size: 100% 2px, 3px 100%;
-}
-
 @layer base {
   :root {
-    --background: 120 100% 3%;
-    --foreground: 120 100% 50%;
-    
-    --card: 120 5% 7%;
-    --card-foreground: 120 100% 50%;
-    
-    --popover: 120 5% 7%;
-    --popover-foreground: 120 100% 50%;
-    
-    --primary: 120 100% 50%;
-    --primary-foreground: 120 100% 5%;
-    
-    --secondary: 120 10% 15%;
-    --secondary-foreground: 120 100% 50%;
-    
-    --muted: 120 5% 12%;
-    --muted-foreground: 120 100% 40%;
-    
-    --accent: 120 80% 60%;
-    --accent-foreground: 120 100% 5%;
-    
+    --background: 210 40% 98%;
+    --foreground: 210 40% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 40% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 40% 10%;
+
+    --primary: 22 95% 55%; /* Warm Orange */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 90%;
+    --secondary-foreground: 210 40% 10%;
+
+    --muted: 210 40% 94%;
+    --muted-foreground: 210 40% 45%;
+
+    --accent: 210 40% 90%;
+    --accent-foreground: 210 40% 10%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
+
+    --border: 210 40% 85%;
+    --input: 210 40% 90%;
+    --ring: 22 95% 55%;
     
-    --border: 120 100% 30%;
-    --input: 120 5% 10%;
-    --ring: 120 100% 50%;
-    
-    --radius: 0rem;
+    --radius: 0.75rem;
   }
 
   .dark {
-    --background: 120 100% 3%;
-    --foreground: 120 100% 50%;
+    --background: 210 40% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 210 40% 5%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 210 40% 5%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 22 95% 55%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 210 40% 15%;
+    --muted-foreground: 210 40% 65%;
     
-    --card: 120 5% 7%;
-    --card-foreground: 120 100% 50%;
-    
-    --popover: 120 5% 7%;
-    --popover-foreground: 120 100% 50%;
-    
-    --primary: 120 100% 50%;
-    --primary-foreground: 120 100% 5%;
-    
-    --secondary: 120 10% 15%;
-    --secondary-foreground: 120 100% 50%;
-    
-    --muted: 120 5% 12%;
-    --muted-foreground: 120 100% 40%;
-    
-    --accent: 120 80% 60%;
-    --accent-foreground: 120 100% 5%;
-    
+    --accent: 210 40% 15%;
+    --accent-foreground: 210 40% 98%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    
-    --border: 120 100% 30%;
-    --input: 120 5% 10%;
-    --ring: 120 100% 50%;
-  }
 
-  .theme-sepia {
-    --background: 39 12% 15%;
-    --foreground: 40 30% 70%;
-    --card: 39 12% 20%;
-    --card-foreground: 40 30% 70%;
-    --popover: 39 12% 20%;
-    --popover-foreground: 40 30% 70%;
-    --primary: 40 50% 60%;
-    --primary-foreground: 40 30% 10%;
-    --secondary: 39 12% 25%;
-    --secondary-foreground: 40 30% 70%;
-    --muted: 39 12% 22%;
-    --muted-foreground: 40 30% 60%;
-    --accent: 40 60% 70%;
-    --accent-foreground: 40 30% 10%;
-    --border: 40 40% 45%;
-    --input: 39 12% 20%;
-    --ring: 40 50% 60%;
+    --border: 210 40% 20%;
+    --input: 210 40% 15%;
+    --ring: 22 95% 55%;
   }
 }
 
@@ -100,28 +71,9 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    @apply bg-background text-foreground font-body;
   }
   ::selection {
     @apply bg-primary text-primary-foreground;
-  }
-}
-
-@layer components {
-  .terminal-container {
-    @apply bg-black/50 border-2 border-primary p-1;
-    box-shadow: 0 0 15px 2px hsl(var(--primary) / 0.5), inset 0 0 15px 2px hsl(var(--primary) / 0.5);
-    transition: border-color 0.5s ease, box-shadow 0.5s ease;
-  }
-  
-  .terminal-panel {
-    @apply border border-primary;
-    transition: border-color 0.5s ease;
-  }
-
-  .terminal-header {
-    @apply text-primary uppercase px-2 py-1;
-    transition: color 0.5s ease;
   }
 }

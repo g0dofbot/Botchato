@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Smile } from 'lucide-react';
 
 export default function LoginPage() {
   const [userId, setUserId] = useState('');
@@ -18,7 +19,7 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!userId || !password) {
-      setError('USER ID AND PASSWORD REQUIRED.');
+      setError('Please enter your User ID and Password.');
       return;
     }
     // For now, any input is valid.
@@ -28,44 +29,45 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="p-2 md:p-4 min-h-screen flex flex-col items-center justify-center">
-      <Card className="w-full max-w-md terminal-container">
-        <CardHeader>
-          <CardTitle className="text-3xl">BPD SECURE MESSAGING</CardTitle>
-          <CardDescription>TERMINAL ACCESS</CardDescription>
+    <main className="p-4 min-h-screen flex flex-col items-center justify-center bg-blue-50">
+      <Card className="w-full max-w-md shadow-lg">
+        <CardHeader className="text-center">
+            <div className="mx-auto bg-primary/20 p-3 rounded-full w-fit mb-2">
+                <Smile className="h-10 w-10 text-primary"/>
+            </div>
+          <CardTitle className="text-3xl font-bold">Fun Messenger</CardTitle>
+          <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="userId">USER ID:</Label>
+              <Label htmlFor="userId">User ID</Label>
               <Input 
                 id="userId" 
                 type="text" 
-                placeholder="ENTER USER ID..." 
+                placeholder="Enter your user ID" 
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
-                className="bg-black/50 border-primary rounded-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">PASSWORD:</Label>
+              <Label htmlFor="password">Password</Label>
               <Input 
                 id="password" 
                 type="password" 
-                placeholder="ENTER PASSWORD..."
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-black/50 border-primary rounded-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0"
               />
             </div>
-            {error && <p className="text-destructive text-center pt-2">{error}</p>}
+            {error && <p className="text-destructive text-sm text-center pt-2">{error}</p>}
           </CardContent>
-          <CardFooter className="flex-col items-stretch gap-4">
-            <Button type="submit" className="w-full bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
-              [ AUTHENTICATE ]
+          <CardFooter className="flex-col items-stretch gap-3">
+            <Button type="submit" className="w-full" size="lg">
+              Sign In
             </Button>
             <Link href="/join" className="text-center text-sm text-muted-foreground hover:text-primary transition-colors">
-              NO ACCOUNT? ENLIST HERE
+              Don't have an account? Sign up
             </Link>
           </CardFooter>
         </form>

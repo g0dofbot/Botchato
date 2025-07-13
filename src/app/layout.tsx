@@ -1,10 +1,17 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
+import { Nunito } from 'next/font/google';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
 
 export const metadata: Metadata = {
-  title: 'Retro Messenger',
-  description: 'A secure messaging app with a retro style.',
+  title: 'Fun Messenger',
+  description: 'A fun messaging app for everyone.',
 };
 
 export default function RootLayout({
@@ -13,13 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
-      </head>
-      <body className="font-body text-lg">
+    <html lang="en" className={`${nunito.variable}`}>
+      <body>
         {children}
         <Toaster />
       </body>

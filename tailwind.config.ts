@@ -10,9 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['VT323', 'monospace'],
-        headline: ['VT323', 'monospace'],
-        code: ['VT323','monospace'],
+        body: ['var(--font-nunito)', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',

@@ -7,16 +7,15 @@ import { ChatWindow } from '@/components/ChatWindow';
 import { type Contact, type Message, contacts as mockContacts } from '@/lib/mock-data';
 import { initAudio, playMessageReceivedSound } from '@/lib/sounds';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { encrypt } from '@/lib/cipher';
+import { Users, LogOut } from 'lucide-react';
 
 export default function ChatPage() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [audioReady, setAudioReady] = useState(false);
-  const [activeTab, setActiveTab] = useState('chat');
 
   useEffect(() => {
     // Select the first contact by default
@@ -28,11 +27,6 @@ export default function ChatPage() {
   const handleSendMessage = useCallback((messageText: string) => {
     if (!selectedContact) return;
     
-    // --- REAL E2EE INTEGRATION POINT ---
-    // Here, you would use a library like libsignal-protocol-javascript
-    // to encrypt the messageText using the established secure session
-    // for the selectedContact. The result would be a ciphertext, not
-    // the simple substitution we're using.
     const encryptedText = encrypt(messageText);
 
     const newMessage: Message = {
@@ -51,8 +45,6 @@ export default function ChatPage() {
     
     // Simulate receiving a reply
     setTimeout(() => {
-      // In a real app, this reply would come from a server and would
-      // also need to be decrypted using the secure session.
       const replyMessage: Message = {
         id: Date.now() + 1,
         text: `${selectedContact.name.toUpperCase()}: ${encrypt('ROGER THAT! OVER.')}`, // Encrypt reply
@@ -85,17 +77,17 @@ export default function ChatPage() {
   if (!audioReady) {
     return (
       <div
-        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4 bg-black"
+        className="flex flex-col items-center justify-center min-h-screen cursor-pointer text-center p-4 bg-blue-50"
         onClick={handleInitAudio}
       >
-        <Card className="max-w-md bg-transparent border-primary text-primary shadow-[0_0_15px_hsl(var(--primary)/0.5)]">
+        <Card className="max-w-md bg-white shadow-lg border-none text-slate-700">
           <CardHeader>
-            <CardTitle className="font-headline text-3xl">INITIALIZE AUDIO TRANSMISSION?</CardTitle>
+            <CardTitle className="text-2xl font-bold">Enable Sound?</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground mb-4">[CLICK TO ENABLE AUDIO FEEDBACK]</p>
-            <Button variant="outline" className="text-primary border-primary hover:bg-primary/20">
-              [ Y / N ]
+            <p className="text-muted-foreground mb-4">Click here to enable sound notifications for new messages.</p>
+            <Button>
+              Enable Audio
             </Button>
           </CardContent>
         </Card>
@@ -103,69 +95,66 @@ export default function ChatPage() {
     );
   }
   
-  const themeClass = selectedContact?.status === 'offline' ? 'theme-sepia' : '';
-
   return (
-    <main className={cn("p-2 md:p-4 min-h-screen flex flex-col items-center justify-center transition-colors duration-500", themeClass)}>
-      <div className="w-full max-w-7xl terminal-container">
-        <header className="flex justify-between items-center text-primary p-1">
-          <span>BLTMR PLC 2.4.00</span>
-          <span>POLICEMAN INFO:</span>
-        </header>
-        
-        <div className="terminal-panel p-1">
-           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="bg-transparent p-0 m-0">
-              <TabsTrigger value="chat" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-none border-t-2 border-x-2 border-primary -mb-px">CHAT</TabsTrigger>
-              <TabsTrigger value="contacts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-none border-t-2 border-x-2 border-primary -mb-px">CONTACTS</TabsTrigger>
-              {['LOC', 'DOCUMENTS', 'ORDERS', 'RECORDINGS', 'MAP'].map(tab => (
-                 <TabsTrigger key={tab} value={tab} disabled className="rounded-none border-t-2 border-x-2 border-primary -mb-px">{tab}</TabsTrigger>
-              ))}
-            </TabsList>
-            <div className="border-t-2 border-primary">
-              <TabsContent value="chat" className="mt-0">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 p-2">
-                  <div className="lg:col-span-8">
-                    <ChatWindow
-                      contact={selectedContact}
-                      onSendMessage={handleSendMessage}
-                    />
-                  </div>
-                  <div className="lg:col-span-4">
-                    <ContactInfo
-                      contact={selectedContact}
-                    />
-                  </div>
+    <main className="p-2 md:p-4 min-h-screen bg-muted/40">
+       <div className="grid grid-cols-12 gap-4 max-w-7xl mx-auto">
+         {/* Sidebar */}
+         <aside className="col-span-3">
+            <Card className="h-full">
+              <CardHeader className='flex-row items-center justify-between'>
+                <div className='flex items-center gap-2'>
+                  <Users className="text-primary" />
+                  <CardTitle className='text-xl'>Friends</CardTitle>
                 </div>
-              </TabsContent>
-              <TabsContent value="contacts" className="mt-0 p-4">
-                 <div className="text-primary space-y-2">
+                 <Button variant="ghost" size="icon" asChild>
+                    <a href="/">
+                      <LogOut className="text-muted-foreground" />
+                    </a>
+                 </Button>
+              </CardHeader>
+              <CardContent>
+                 <div className="space-y-2">
                    {contacts.map(contact => (
                      <div 
                         key={contact.id} 
-                        onClick={() => { setSelectedContact(contact); setActiveTab('chat')}}
-                        className={`cursor-pointer p-2 flex justify-between items-center ${selectedContact?.id === contact.id ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/20'}`}
+                        onClick={() => setSelectedContact(contact)}
+                        className={cn(
+                          'cursor-pointer p-3 flex justify-between items-center rounded-lg transition-colors',
+                          selectedContact?.id === contact.id ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'
+                        )}
                       >
-                       <span>&gt; {contact.name.toUpperCase()}</span>
-                        <span className={`text-xs px-2 py-1 ${
-                          contact.status === 'online'
-                            ? 'bg-primary/20 text-primary'
-                            : 'bg-muted text-muted-foreground'
-                        }`}>
-                          {contact.status.toUpperCase()}
-                        </span>
+                       <span className="font-semibold">{contact.name}</span>
+                        <div className='flex items-center gap-2'>
+                           <span className={cn('text-xs font-bold', contact.status === 'online' ? 'text-green-500' : 'text-slate-400')}>
+                            {contact.status.toUpperCase()}
+                           </span>
+                           <span className={cn(
+                              "w-2 h-2 rounded-full", 
+                              contact.status === 'online' ? 'bg-green-500' : 'bg-slate-400'
+                            )}>
+                           </span>
+                        </div>
                      </div>
                    ))}
                  </div>
-              </TabsContent>
-            </div>
-          </Tabs>
+              </CardContent>
+            </Card>
+         </aside>
+
+        {/* Main Chat Area */}
+        <div className="col-span-6">
+            <ChatWindow
+              contact={selectedContact}
+              onSendMessage={handleSendMessage}
+            />
         </div>
-        
-        <footer className="flex justify-between items-center text-primary p-1">
-            <span>{selectedContact?.status === 'online' ? 'SIGNAL: STRONG' : 'SIGNAL: WEAK'}</span>
-            <span>PROPERTY OF BALTIMORE POLICE DEPARTMENT</span>
-        </footer>
+
+        {/* Contact Info */}
+        <div className="col-span-3">
+          <ContactInfo
+            contact={selectedContact}
+          />
+        </div>
       </div>
     </main>
   );

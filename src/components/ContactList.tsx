@@ -3,6 +3,8 @@
 
 import type { Contact } from '@/lib/mock-data';
 import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Badge } from './ui/badge';
 
 interface ContactInfoProps {
   contact: Contact | null;
@@ -11,38 +13,46 @@ interface ContactInfoProps {
 export function ContactInfo({ contact }: ContactInfoProps) {
   if (!contact) {
     return (
-      <div className="h-full flex items-center justify-center terminal-panel text-primary">
-        <p>AWAITING SUBJECT IDENTIFICATION...</p>
-      </div>
+      <Card className="h-full">
+        <CardContent className="h-full flex items-center justify-center text-muted-foreground">
+          <p>Select a friend to see their info.</p>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="h-full flex flex-col gap-2 text-lg text-primary">
-      <div className="terminal-panel p-2 flex gap-4">
-        <div className="w-24 h-24 border border-primary p-1 bg-black">
-           <Image
-            src={contact.avatar}
-            alt={`Mugshot of ${contact.name}`}
-            width={96}
-            height={96}
-            className="w-full h-full object-cover"
-            data-ai-hint="pixelated portrait"
-          />
-        </div>
-        <div className="space-y-1">
-          <p>OFFICER: {contact.officerId}</p>
-          <p>LEGAL NAME: {contact.name.toUpperCase()}</p>
-          <p>SECURITY CODE: {contact.securityCode}</p>
-          <p>STATUS: <span className={contact.status === 'online' ? 'text-primary' : 'text-muted-foreground'}>{contact.status.toUpperCase()}</span></p>
-        </div>
-      </div>
-      <div className="terminal-panel p-2 flex-grow">
-        <p className="font-bold mb-2">BIO:</p>
-        <p>{contact.bio}</p>
-        <p className="mt-4 font-bold">WEAPON OF CHOICE:</p>
-        <p>{contact.weapon}</p>
-      </div>
-    </div>
+    <Card className="h-full">
+        <CardHeader className="items-center text-center">
+            <div className="relative">
+                <Image
+                    src={contact.avatar}
+                    alt={`Avatar of ${contact.name}`}
+                    width={96}
+                    height={96}
+                    className="rounded-full border-4 border-white shadow-md"
+                    data-ai-hint="cute avatar"
+                />
+                 <span className={cn(
+                    "absolute bottom-1 right-1 block w-4 h-4 rounded-full border-2 border-white", 
+                    contact.status === 'online' ? 'bg-green-500' : 'bg-slate-400'
+                )}></span>
+            </div>
+            <CardTitle className="text-xl mt-2">{contact.name}</CardTitle>
+            <p className="text-sm text-muted-foreground">@{contact.username}</p>
+        </CardHeader>
+        <CardContent className="text-sm text-center">
+            <div className="space-y-4">
+                <div>
+                    <h4 className="font-semibold text-slate-800">About Me</h4>
+                    <p className="text-muted-foreground">{contact.bio}</p>
+                </div>
+                 <div>
+                    <h4 className="font-semibold text-slate-800">Favorite Food</h4>
+                    <p className="text-muted-foreground">{contact.favoriteFood}</p>
+                </div>
+            </div>
+        </CardContent>
+    </Card>
   );
 }

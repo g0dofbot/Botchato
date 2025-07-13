@@ -10,20 +10,15 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
 const asciiArt = `
-    ,o.          .o,
-  ,o88.        .88o,
-,o8888.      .8888o,
-  '88888888888888'
-    '8888888888'
-      '888888'
-      .888888.
-    .88888888.
-  .8888888888.
-8888888888888888
-'88888888888888'
-  '8888888888'
-    'V8888V'
-      'V''V'
+      *****************
+   ***********************
+ ***************************
+*****************************
+*****************************
+*****************************
+ ***************************
+   ***********************
+      *****************
 `;
 
 export default function JoinPage() {
@@ -36,7 +31,7 @@ export default function JoinPage() {
   const handleJoin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!officerId || !callsign || !password) {
-      setError('ALL FIELDS ARE REQUIRED FOR REGISTRATION.');
+      setError('All fields are required.');
       return;
     }
     // In a real app, you'd create the user here.
@@ -47,62 +42,68 @@ export default function JoinPage() {
   };
 
   return (
-    <main className="p-2 md:p-4 min-h-screen flex flex-col items-center justify-center">
+    <main className="p-4 min-h-screen flex flex-col items-center justify-center bg-blue-50">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-4xl">
-        <div className="text-primary hidden md:block">
-          <pre className="text-center text-xs leading-tight">
-            {asciiArt}
+        <div className="text-primary hidden md:block text-center">
+          <pre className="text-orange-400 text-xs leading-tight opacity-70">
+{`
+          .--.
+         |o_o |
+         |:_/ |
+        //   \\ \\
+       (|     | )
+      /'\\_   _/'\\
+      \\___)=(___/
+`}
           </pre>
-          <p className="text-center mt-4 font-headline">BALTIMORE POLICE DEPARTMENT</p>
+          <p className="text-center mt-4 font-bold text-lg text-slate-700">Join the Fun!</p>
+          <p className="text-center text-sm text-slate-500">Create an account to start chatting with friends.</p>
         </div>
-        <Card className="w-full max-w-md terminal-container">
+        <Card className="w-full max-w-md shadow-lg">
           <CardHeader>
-            <CardTitle className="text-3xl">ENLISTMENT</CardTitle>
-            <CardDescription>CREATE YOUR BPD ACCOUNT</CardDescription>
+            <CardTitle className="text-3xl font-bold">Create an Account</CardTitle>
+            <CardDescription>It's quick and easy!</CardDescription>
           </CardHeader>
           <form onSubmit={handleJoin}>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="officerId">OFFICER ID:</Label>
+                <Label htmlFor="officerId">Your Name</Label>
                 <Input 
                   id="officerId" 
                   type="text" 
-                  placeholder="ASSIGNED IDENTIFIER..." 
+                  placeholder="e.g. Alex" 
                   value={officerId}
                   onChange={(e) => setOfficerId(e.target.value)}
-                  className="bg-black/50 border-primary rounded-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0"
                 />
               </div>
                <div className="space-y-2">
-                <Label htmlFor="callsign">CALLSIGN:</Label>
+                <Label htmlFor="callsign">Username</Label>
                 <Input 
                   id="callsign" 
                   type="text" 
-                  placeholder="OPERATIONAL NAME..." 
+                  placeholder="e.g. alex_plays" 
                   value={callsign}
                   onChange={(e) => setCallsign(e.target.value)}
-                  className="bg-black/50 border-primary rounded-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">PASSWORD:</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input 
                   id="password" 
                   type="password" 
-                  placeholder="ACCESS CODE..."
+                  placeholder="Create a password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-black/50 border-primary rounded-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0"
                 />
               </div>
-              {error && <p className="text-destructive text-center pt-2">{error}</p>}
+              {error && <p className="text-destructive text-sm text-center pt-2">{error}</p>}
             </CardContent>
-            <CardFooter className="flex-col items-stretch gap-4">
-              <Button type="submit" className="w-full bg-black/50 border-primary rounded-none h-full px-8 text-lg hover:bg-primary/20">
-                [ SUBMIT APPLICATION ]
+            <CardFooter className="flex-col items-stretch gap-3">
+              <Button type="submit" className="w-full" size="lg">
+                Sign Up
               </Button>
                <Link href="/" className="text-center text-sm text-muted-foreground hover:text-primary transition-colors">
-                  &lt; RETURN TO LOGIN TERMINAL &gt;
+                  Already have an account? Sign In
                 </Link>
             </CardFooter>
           </form>
