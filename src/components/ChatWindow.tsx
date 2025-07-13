@@ -14,6 +14,7 @@ import { SmileIcon } from '@/components/icons/SmileIcon';
 import { UserIcon } from '@/components/icons/UserIcon';
 import { retroEmojis } from '@/lib/emojiList';
 import Image from 'next/image';
+import { MessageRenderer } from './MessageRenderer';
 
 
 interface ChatWindowProps {
@@ -44,7 +45,7 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
   };
   
   const handleEmojiSelect = (emojiName: string) => {
-    setNewMessage(prev => prev + `:${emojiName.toLowerCase()}: `);
+    setNewMessage(prev => prev + `:${emojiName.toLowerCase()}:`);
   }
 
   if (!contact) {
@@ -82,7 +83,9 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
                       : 'from-left'
                   )}
                 >
-                  <p className="break-words">{msg.text}</p>
+                  <p className="break-words">
+                     <MessageRenderer text={msg.text} />
+                  </p>
                 </div>
                 {msg.sender === 'me' && <UserIcon className="w-12 h-12 flex-shrink-0" />}
               </div>
