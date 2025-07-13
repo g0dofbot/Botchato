@@ -63,27 +63,27 @@ export function ChatWindow({ contact, onSendMessage }: ChatWindowProps) {
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-4 overflow-hidden">
         <ScrollArea className="flex-grow p-4 rounded-md bg-background" ref={scrollAreaRef}>
-          <div className="space-y-4">
+          <div className="space-y-8">
             {contact.messages.map((msg) => (
               <div
                 key={msg.id}
                 className={cn(
-                  "flex items-end gap-2",
-                  msg.sender === 'me' ? 'justify-end' : 'justify-start'
+                  "flex items-start gap-4 max-w-lg",
+                  msg.sender === 'me' ? 'justify-end ml-auto' : 'justify-start mr-auto'
                 )}
               >
-                {msg.sender === 'contact' && <UserIcon className="w-10 h-10 flex-shrink-0" />}
+                {msg.sender === 'contact' && <UserIcon className="w-12 h-12 flex-shrink-0" />}
                  <div
                   className={cn(
-                    'p-3 rounded-md border max-w-xs md:max-w-md lg:max-w-lg',
+                    'nes-balloon',
                     msg.sender === 'me'
-                      ? 'bg-secondary'
-                      : 'bg-muted'
+                      ? 'from-right'
+                      : 'from-left'
                   )}
                 >
                   <p className="break-words">{msg.text}</p>
                 </div>
-                {msg.sender === 'me' && <UserIcon className="w-10 h-10 flex-shrink-0" />}
+                {msg.sender === 'me' && <UserIcon className="w-12 h-12 flex-shrink-0" />}
               </div>
             ))}
           </div>
