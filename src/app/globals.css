@@ -4,6 +4,38 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: 0 0% 83%; /* Light Grey */
+    --foreground: 0 0% 0%; /* Black */
+
+    --card: 0 0% 83%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 83%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 0 0% 0%; /* Black for text */
+    --primary-foreground: 0 0% 83%; /* Light Grey for text on primary */
+
+    --secondary: 0 0% 93%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 93%;
+    --muted-foreground: 0 0% 41%;
+
+    --accent: 0 0% 93%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 0%; /* Black border */
+    --input: 0 0% 0%; /* Black for input border */
+    --ring: 0 0% 0%;
+    
+    --radius: 0rem;
+  }
+
   .theme-green {
     --background: 240 70% 4%; /* Darker Navy */
     --foreground: 48, 92%, 52%; /* Terminal Green */
@@ -78,7 +110,7 @@
     @apply bg-background text-primary font-mono;
     background-color: hsl(var(--background));
     color: hsl(var(--primary));
-    text-shadow: 0 0 5px hsl(var(--primary) / 0.5);
+    /* text-shadow: 0 0 5px hsl(var(--primary) / 0.5); */
     transition: background-color 0.5s ease, color 0.5s ease, text-shadow 0.5s ease;
   }
    body::after {
@@ -93,11 +125,41 @@
     z-index: 2;
     background-size: 100% 2px, 3px 100%;
     pointer-events: none;
+    opacity: 0.2; /* Reduce scanline opacity on light background */
   }
   main, div, aside, section, form, input, textarea, button, a {
     transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
   }
   ::selection {
     @apply bg-primary text-primary-foreground;
+  }
+  .dark {
+    --background: 240 70% 4%; /* Darker Navy */
+    --foreground: 48, 92%, 52%; /* Terminal Green */
+
+    --card: 240 70% 6%;
+    --card-foreground: 120 73% 75%;
+
+    --popover: 240 70% 4%;
+    --popover-foreground: 120 73% 75%;
+
+    --primary: 120 73% 75%; /* Bright Green */
+    --primary-foreground: 240 70% 10%; 
+
+    --secondary: 240 30% 15%;
+    --secondary-foreground: 120 73% 75%;
+
+    --muted: 240 30% 15%;
+    --muted-foreground: 120 73% 65%;
+
+    --accent: 240 30% 25%;
+    --accent-foreground: 120 73% 85%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 120 73% 75%;
+    --input: 240 30% 15%;
+    --ring: 120 73% 75%;
   }
 }

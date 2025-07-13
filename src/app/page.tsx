@@ -29,41 +29,41 @@ export default function LoginPage() {
 
   return (
     <main className="p-4 min-h-screen flex items-center justify-center">
-      <Card className="max-w-md w-full bg-background/50 border-primary/30">
-        <CardHeader>
-          <CardTitle className="text-primary text-center text-xl">
+      <Card className="max-w-md w-full bg-card border-border shadow-none rounded-none">
+        <CardHeader className="pt-6 pb-4">
+          <CardTitle className="text-primary text-center text-lg tracking-widest">
             BPD SECURE MESSAGING
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-6 pb-6">
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="userId">USER ID</Label>
+              <Label htmlFor="userId" className="text-sm tracking-widest">USER ID</Label>
               <Input
                 id="userId"
                 type="text"
-                className="bg-input border-primary/30 text-primary"
+                className="bg-card border-input text-primary rounded-none h-9"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
               />
             </div>
             <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="password">PASSWORD</Label>
+              <Label htmlFor="password" className="text-sm tracking-widest">PASSWORD</Label>
               <Input
                 id="password"
                 type="password"
-                className="bg-input border-primary/30 text-primary"
+                className="bg-card border-input text-primary rounded-none h-9"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             {error && <p className="text-destructive text-sm">{error}</p>}
             <div className='flex flex-col items-center gap-4 pt-4'>
-              <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/80">
-                <RadioTowerIcon className="w-5 h-5 mr-2" />
+              <Button type="submit" variant="ghost" size="sm" className="w-full text-primary hover:bg-transparent hover:text-primary tracking-widest p-0 justify-center h-auto">
+                <RadioTowerIcon className="w-4 h-4 mr-2" />
                 CONNECT
               </Button>
-              <Link href="/join" className="text-primary/50 hover:text-primary text-sm">
+              <Link href="/join" className="text-primary/80 hover:text-primary text-xs tracking-widest">
                  NO ACCOUNT? ENLIST HERE
               </Link>
             </div>
