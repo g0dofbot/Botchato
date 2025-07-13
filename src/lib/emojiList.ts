@@ -19,4 +19,7 @@ export const retroEmojis: RetroEmoji[] = [
     { name: 'sunglasses', path: 'https://placehold.co/32x32.png' },
     { name: 'upside-smile', path: 'https://placehold.co/32x32.png' },
     { name: 'blush', path: 'https://placehold.co/32x32.png' },
+    { name: 'kissing-heart', path: 'https://placehold.co/32x32.png' },
+    { name: 'npc', path: 'https://placehold.co/32x32.png' },
+    { name: 'smirk', path: 'https://placehold.co/32x32.png' },
 ];
